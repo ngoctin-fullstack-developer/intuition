@@ -1,12 +1,12 @@
 import React from 'react'
 import {Routes,Route} from 'react-router-dom'
-import LoginView from './views/login.view'
+import RegisterView from './views/register.view'
 
 const App = () => {
   return (
     <div className='app'>
         <Routes>
-            <Route path='/login' element={<LoginView/>}  />
+            <Route path='/register' element={<RegisterView/>}  />
         </Routes>
     </div>
   )
