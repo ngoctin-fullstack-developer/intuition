@@ -29,6 +29,11 @@
             select{
                 width: 31.5%;
             }
+            #datePicker{
+                padding: 1% 1.5%;
+                border: 1px solid #ced4da;
+                border-radius: 0.25rem;
+            }
         }
         button{
             width: 100px;
