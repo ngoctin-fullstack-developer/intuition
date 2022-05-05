@@ -41,8 +41,13 @@ export default class AuthMiddleware {
                 fullname: Object.values(decodedToken)[1],
                 username: Object.values(decodedToken)[2],
                 password: Object.values(decodedToken)[3],
-                role: Object.values(decodedToken)[4]
+                email : Object.values(decodedToken)[4],
+                phoneNumber : Object.values(decodedToken)[5],
+                birthday : Object.values(decodedToken)[6],
+                address : Object.values(decodedToken)[7],
+                role: Object.values(decodedToken)[8]
             }
+            console.log("user : " + Object.values(user));
             return user;
         }
         return null;

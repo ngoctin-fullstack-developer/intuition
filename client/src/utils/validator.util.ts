@@ -19,7 +19,13 @@ export default class Validator{
         var regex = /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/g;
         return regex.test(phoneNumber);
     }
-    static isValidAddress(code : number){
+    static isValidSelect(code : number){
         return code !== 0 ? true : false;
+    }
+    static isValidAddress(address : string){
+        if(address.length > 0){
+            return true;
+        }
+        return false;
     }
 }

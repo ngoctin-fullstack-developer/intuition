@@ -8,6 +8,7 @@ import AddressService from '../services/address.service';
 import '../styles/register.style.scss'
 import Validator from '../utils/validator.util';
 import { Link } from 'react-router-dom';
+import AuthService from '../services/auth.service';
 
 const RegisterView = () => {
   const [startDate, setStartDate] = useState<Date | null>(null);
@@ -74,13 +75,26 @@ const RegisterView = () => {
   }
 
   async function onClick(event: React.MouseEvent) {
+    event.preventDefault();
     var btnID = event.currentTarget.getAttribute('id')?.toString();
+    console.log('onClick - processing')
     if (btnID === 'registerBtn') {
-      if (Validator.isValidAddress(provinceCode)
-        && Validator.isValidAddress(districtCode)
-        && Validator.isValidAddress(wardCode)
+      if (Validator.isValidSelect(provinceCode)
+        && Validator.isValidSelect(districtCode)
+        && Validator.isValidSelect(wardCode)
       ) {
-
+        console.log('onClick - true')
+        var pName: string = await AddressService.getProviceNameByCode(provinceCode);
+        var dName: string = await AddressService.getDistrictNameByCode(districtCode);
+        var wName: string = await AddressService.getWardNameByCode(wardCode);
+        var signUpInformation: ISignUp = { ...signup, address: `${signup.address},${pName},${dName},${wName}` };
+        var response : boolean = await AuthService.register(signUpInformation);
+        if(response === true){
+          // show dialog create successfully
+          console.log("Create successfully !");
+        }else{
+          // show log
+        }
       }
     }
   }
@@ -102,6 +116,9 @@ const RegisterView = () => {
         break;
       case 'register.phone':
         setSignup({ ...signup, phoneNumber: event.target.value })
+        break;
+      case 'register.address':
+        setSignup({ ...signup, address: event.target.value })
         break;
       default: break;
     }
@@ -150,17 +167,17 @@ const RegisterView = () => {
     var selectionID = event.currentTarget.getAttribute('id');
     switch (selectionID) {
       case 'province':
-        if (!Validator.isValidAddress(provinceCode)) {
+        if (!Validator.isValidSelect(provinceCode)) {
           document.getElementById('province')?.focus();
         }
         break;
       case 'district':
-        if (!Validator.isValidAddress(districtCode)) {
+        if (!Validator.isValidSelect(districtCode)) {
           document.getElementById('district')?.focus();
         }
         break;
       case 'ward':
-        if (!Validator.isValidAddress(wardCode)) {
+        if (!Validator.isValidSelect(wardCode)) {
           document.getElementById('ward')?.focus();
         }
         break;
@@ -168,8 +185,6 @@ const RegisterView = () => {
         break;
     }
   }
-
-
   return (
     <div className='register' >
       <Form>
@@ -229,16 +244,20 @@ const RegisterView = () => {
             <Form.Control type="tel" placeholder="Phone Number" onBlur={onInputFocusOut} onChange={onInputChange} />
           </OverlayTrigger>
         </Form.Group>
-        <OverlayTrigger
-          placement="top"
-          delay={{ show: 250, hide: 400 }}
-          overlay={renderTooltip("You must select your birthday!")}
-        >
-          <Form.Group className="mb-3">
-            <Form.Label>Birthday</Form.Label>
-            <DatePicker id='datePicker' onChange={(date: Date) => setStartDate(date)} selected={startDate} placeholderText="Your Birthday" />
-          </Form.Group>
-        </OverlayTrigger>
+        <Form.Group className="mb-3" controlId="register.phone">
+          <Form.Label>Birthday</Form.Label>
+          <OverlayTrigger
+            placement="top"
+            delay={{ show: 250, hide: 400 }}
+            overlay={renderTooltip("You must select your birthday!")}
+          >
+            {/* <DatePicker id='datePicker' onChange={(date: Date) => setStartDate(date)} selected={startDate} placeholderText="Your Birthday" /> */}
+            <DatePicker id='datePicker' onChange={(date: Date) => {
+              setSignup({...signup,birthday : date.toDateString()})
+              setStartDate(date)
+            }} selected={startDate} placeholderText="Your Birthday" />
+          </OverlayTrigger>
+        </Form.Group>
         <Form.Group className="mb-3">
           <Form.Label>Address</Form.Label>
           <OverlayTrigger
@@ -253,6 +272,9 @@ const RegisterView = () => {
               }
             </Form.Select>
           </OverlayTrigger>
+        </Form.Group>
+        <Form.Group className="mb-3">
+          <Form.Label></Form.Label>
           <OverlayTrigger
             placement="top"
             delay={{ show: 250, hide: 400 }}
@@ -265,17 +287,31 @@ const RegisterView = () => {
               }
             </Form.Select>
           </OverlayTrigger>
+        </Form.Group>
+        <Form.Group className="mb-3">
+          <Form.Label></Form.Label>
           <OverlayTrigger
             placement="top"
             delay={{ show: 250, hide: 400 }}
             overlay={renderTooltip("You must select ward!")}
           >
-          <Form.Select aria-label="Default select example" id="ward" onChange={onSelectionChange} onBlur={onSelectFocusOut}>
-            <option value={0}>Ward</option>
-            {
-              wards.map(ward => (<option key={ward.code} value={ward.code}>{ward.name}</option>))
-            }
-          </Form.Select>
+            <Form.Select aria-label="Default select example" id="ward" onChange={onSelectionChange} onBlur={onSelectFocusOut}>
+              <option value={0}>Ward</option>
+              {
+                wards.map(ward => (<option key={ward.code} value={ward.code}>{ward.name}</option>))
+              }
+            </Form.Select>
+          </OverlayTrigger>
+        </Form.Group>
+
+        <Form.Group className="mb-3" controlId="register.address">
+          <Form.Label></Form.Label>
+          <OverlayTrigger
+            placement="right"
+            delay={{ show: 250, hide: 400 }}
+            overlay={renderTooltip("Address is required ! ")}
+          >
+            <Form.Control type="text" placeholder="House number, Road, ... " onBlur={onInputFocusOut} onChange={onInputChange} />
           </OverlayTrigger>
         </Form.Group>
         <Button id='registerBtn' variant="primary" type="submit" onClick={onClick}>Sign Up</Button>
