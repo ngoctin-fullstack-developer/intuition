@@ -9,6 +9,8 @@ export default class UserDatabaseOperation {
             var sql = `INSERT INTO users 
             VALUES('${user.id}','${user.fullname}',
             '${user.username}','${user.password}',
+            '${user.email}','${user.phoneNumber}',
+            '${user.birthday}','${user.address}',
             '${user.role}')`;
             var result = await connection.request().query(sql);
             console.log(result.rowsAffected);

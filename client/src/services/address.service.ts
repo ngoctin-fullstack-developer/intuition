@@ -19,4 +19,16 @@ export default class AddressService {
         var response : Array<IWard> = await AddressAPI.getWardsByDistrictCode(districtCode);
         return response;
     }
+    static async getProviceNameByCode(pcode : number){
+        var response = await AddressAPI.getProviceNameByCode(pcode);
+        return response;
+    }
+    static async getDistrictNameByCode(dcode : number){
+        var response = await AddressAPI.getDistrictNameByCode(dcode);
+        return response;
+    }
+    static async getWardNameByCode(wcode : number){
+        var response = await AddressAPI.getWardNameByCode(wcode);
+        return response;
+    }
 }

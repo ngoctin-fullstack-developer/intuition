@@ -3,15 +3,20 @@ import User from '../models/user.model';
 import bcrypt from 'bcrypt'
 import AuthMiddleware from '../middleware/auth.middleware';
 import UserDatabaseOperation from '../database/user.database.operation';
+import UserUtil from '../utils/user.util';
 export default class AuthController {
     static async register(request: Request, response: Response) {
         // Mapping user from request
         var user: User = {
-            id: request.body.id,
+            id: UserUtil.createUserID(),
             fullname: request.body.fullname,
             username: request.body.username,
             password: request.body.password,
-            role: request.body.role
+            phoneNumber : request.body.phoneNumber,
+            email : request.body.email,
+            birthday : request.body.birthday,
+            address : request.body.address,
+            role: 'USER'
         }
 
         // Hash password
@@ -22,7 +27,7 @@ export default class AuthController {
         // Call database and return response
         var result = await UserDatabaseOperation.createUser(user);
         if (result) {
-            return response.status(200).json(user);
+            return response.status(200).json(true);
         }
         return response.status(304).json("Create User Failed !");
     }

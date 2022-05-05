@@ -38,4 +38,37 @@ export default class AddressAPI {
             }
         }
     }
+
+    static async getProviceNameByCode(pCode : number){
+        try {
+            var response = await axios.get(`https://provinces.open-api.vn/api/p/${pCode}`);
+            if(response && response.data) return response.data.name;
+        } catch (error) {
+            if(error && request.isAxiosError(error)){
+                return error.response;
+            }
+        }
+    }
+
+    static async getDistrictNameByCode(dCode : number){
+        try {
+            var response = await axios.get(`https://provinces.open-api.vn/api/d/${dCode}`);
+            if(response && response.data) return response.data.name;
+        } catch (error) {
+            if(error && request.isAxiosError(error)){
+                return error.response;
+            }
+        }
+    }
+
+    static async getWardNameByCode(wCode : number){
+        try {
+            var response = await axios.get(`https://provinces.open-api.vn/api/w/${wCode}`);
+            if(response && response.data) return response.data.name;
+        } catch (error) {
+            if(error && request.isAxiosError(error)){
+                return error.response;
+            }
+        }
+    }
 }
