@@ -7,6 +7,7 @@ import { initialSignUp, ISignUp } from '../models/signup.model';
 import AddressService from '../services/address.service';
 import '../styles/register.style.scss'
 import Validator from '../utils/validator.util';
+import { Link } from 'react-router-dom';
 
 const RegisterView = () => {
   const [startDate, setStartDate] = useState<Date | null>(null);
@@ -83,8 +84,6 @@ const RegisterView = () => {
       }
     }
   }
-
-
 
   async function onInputChange(event: React.ChangeEvent<HTMLInputElement>) {
     var inputID = event.currentTarget.getAttribute('id')?.toString();
@@ -179,7 +178,7 @@ const RegisterView = () => {
           <h1>Register</h1>
           <div className='__line'></div>
         </div>
-        <small>Create your account. It's free and only take a minute.</small>
+        <small>You already have an account. <Link to='/login'>Sign in here</Link> !</small>
         <Form.Group className="mb-3" controlId="register.username">
           <Form.Label>Username</Form.Label>
           <OverlayTrigger
@@ -279,7 +278,7 @@ const RegisterView = () => {
           </Form.Select>
           </OverlayTrigger>
         </Form.Group>
-        <Button id='registerBtn' variant="primary" type="submit" onClick={onClick}>Register</Button>
+        <Button id='registerBtn' variant="primary" type="submit" onClick={onClick}>Sign Up</Button>
       </Form>
     </div >
   )
