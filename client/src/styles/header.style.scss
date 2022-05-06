@@ -1,5 +1,51 @@
-.header{
+.header {
     display: flex;
     width: 100%;
+    padding-right: 7.75%;
     height: 150px;
+    .__left {
+        display: flex;
+        width: 18%;
+        > h2 {
+            color: #393d46;
+            padding-top: 60px;
+            font-size: 24px;
+            font-weight: 900;
+            letter-spacing: 0.1rem;
+            padding-left: 10%;
+            width: 50%;
+        }
+    }
+    .__right {
+        display: flex;
+        margin-left: 68.25%;
+        width: 16%;
+        align-items: center;
+        justify-content: space-between;
+        button {
+            border: none;
+            background-color: transparent;
+            width: fit-content;
+            height: fit-content;
+            > svg {
+                color: #393d46;
+                height: 100%;
+                width: 32px;
+                height: 32px;
+                font-weight: 900;
+            }
+        }
+        a{
+            width: 100px;
+            height: 50px;
+            border: 1px solid;
+            text-align: center;
+            padding: 12px;
+            text-decoration: none;
+            font-weight: 700;
+            letter-spacing: 0.05rem;
+            color: white;
+            background-color: #393d46;
+        }
+    }
 }

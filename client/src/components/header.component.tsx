@@ -1,23 +1,23 @@
-import React from 'react'
-import {Dropdown} from 'react-bootstrap'
 import '../styles/header.style.scss'
+import MyDropdown from './dropdown.component'
+import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
+import ShoppingBasketOutlinedIcon from '@mui/icons-material/ShoppingBasketOutlined';
+import { Link } from 'react-router-dom';
 
 const Header = () => {
     return (
         <div className='header'>
-            {/** DropdownMenu */}
-            {/**Name */}
             {/**Search Button */}
             {/**Cart */}
             {/**Login */}
-            <Dropdown>
-                <Dropdown.Toggle variant="success" id="dropdown-basic"></Dropdown.Toggle>
-                <Dropdown.Menu>
-                    <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-                    <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-                    <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
-                </Dropdown.Menu>
-            </Dropdown>
+            <div className='__left' >
+                <MyDropdown />
+                <h2>Intuition.</h2></div>
+            <div className='__right' >
+                <button><SearchOutlinedIcon/></button>
+                <button><ShoppingBasketOutlinedIcon/></button>
+                <Link to="/login">Login</Link>
+            </div>
         </div>
     )
 }

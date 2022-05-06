@@ -1,3 +1,4 @@
+import { height } from '@mui/system'
 import React from 'react'
 import {Routes,Route} from 'react-router-dom'
 import HomeView from './views/home.view'
@@ -6,7 +7,15 @@ import RegisterView from './views/register.view'
 
 const App = () => {
   return (
-    <div className='app'>
+    <div style={{
+      display : 'flex',
+      flexDirection :'column',
+      height : 'fitContent',
+      backgroundColor : '#F6F7FB',
+      margin : '0',
+      padding : '0',
+      boxSizing : 'border-box'
+    }} className='app'>
         <Routes>
             <Route path='/register' element={<RegisterView/>}  />
             <Route path='/login' element={<LoginView/>}  />
