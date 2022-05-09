@@ -3,6 +3,7 @@ import express from 'express';
 import bodyParser from 'body-parser'
 import userRouter from './routes/user.router';
 import authRouter from './routes/auth.router'
+import categoryRouter from './routes/category.router'
 var port = process.env.PORT || 8080;
 const app = express();
 
@@ -21,6 +22,7 @@ app.use(bodyParser.json());
 /** Router */
 app.use('/api/user',userRouter);
 app.use('/api/auth',authRouter);
+app.use('/api/category',categoryRouter);
 
 /** App Running */
 app.listen(port,()=>{

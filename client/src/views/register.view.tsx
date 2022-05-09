@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Form, Button, Tooltip, OverlayTrigger } from 'react-bootstrap'
+import { Form, Button, Tooltip, OverlayTrigger, Modal } from 'react-bootstrap'
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { IDistrict, IProvice, IWard } from '../models/address.model';
@@ -9,6 +9,9 @@ import '../styles/register.style.scss'
 import Validator from '../utils/validator.util';
 import { Link } from 'react-router-dom';
 import AuthService from '../services/auth.service';
+import DatetimeUtil from '../utils/datetime.util';
+import { DATETIMECONSTANTS } from '../Constants/datetime.constant';
+import { IModal } from '../models/modal.model';
 
 const RegisterView = () => {
   const [startDate, setStartDate] = useState<Date | null>(null);
@@ -19,6 +22,14 @@ const RegisterView = () => {
   const [districtCode, setDistrictCode] = useState(0);
   const [wardCode, setWardCode] = useState(0);
   const [signup, setSignup] = useState<ISignUp>(initialSignUp)
+  const [modal,setModal] = useState<IModal>({
+    title : 'Register Failed',
+    href : '/register',
+    isOpen : false,
+    message : 'Register Failed'
+  })
+  const handleModalClose = () => setModal({...modal, isOpen : false});
+
 
   useEffect(() => {
     async function fetchProvinces() {
@@ -78,22 +89,35 @@ const RegisterView = () => {
     event.preventDefault();
     var btnID = event.currentTarget.getAttribute('id')?.toString();
     console.log('onClick - processing')
+    setModal({...modal, isOpen : true});
     if (btnID === 'registerBtn') {
       if (Validator.isValidSelect(provinceCode)
         && Validator.isValidSelect(districtCode)
         && Validator.isValidSelect(wardCode)
+        && startDate
       ) {
-        console.log('onClick - true')
+        console.log('onClick - true')        
         var pName: string = await AddressService.getProviceNameByCode(provinceCode);
         var dName: string = await AddressService.getDistrictNameByCode(districtCode);
         var wName: string = await AddressService.getWardNameByCode(wardCode);
-        var signUpInformation: ISignUp = { ...signup, address: `${signup.address},${pName},${dName},${wName}` };
-        var response : boolean = await AuthService.register(signUpInformation);
-        if(response === true){
-          // show dialog create successfully
+        var signUpInformation: ISignUp = {
+          ...signup,
+          address: `${signup.address},${pName},${dName},${wName}`,
+          birthday: DatetimeUtil.getDate(startDate.toString(), DATETIMECONSTANTS.DDMMYYY)
+        };
+        var response: boolean = await AuthService.register(signUpInformation);
+        console.log(Object.values(signUpInformation));
+        console.log("response :" + response);
+        if (response === true) {
           console.log("Create successfully !");
-        }else{
-          // show log
+          setStartDate(null);
+          setSignup(initialSignUp);
+          setProvinceCode(0);
+          setDistrictCode(0);
+          setWardCode(0);
+          
+        } else if(response == false) {
+          
         }
       }
     }
@@ -201,7 +225,7 @@ const RegisterView = () => {
             delay={{ show: 250, hide: 400 }}
             overlay={renderTooltip("Username is required ! Username must contain dot character ! ")}
           >
-            <Form.Control type="text" placeholder="Username" onBlur={onInputFocusOut} onChange={onInputChange} />
+            <Form.Control value={signup.username} type="text" placeholder="Username" onBlur={onInputFocusOut} onChange={onInputChange} />
           </OverlayTrigger>
         </Form.Group>
         <Form.Group className="mb-3" controlId="register.password">
@@ -211,7 +235,7 @@ const RegisterView = () => {
             delay={{ show: 250, hide: 400 }}
             overlay={renderTooltip("Password is required ! Password must contain at least Uppercase, special character and number !")}
           >
-            <Form.Control type="password" placeholder="Password" onBlur={onInputFocusOut} onChange={onInputChange} />
+            <Form.Control value={signup.password} type="password" placeholder="Password" onBlur={onInputFocusOut} onChange={onInputChange} />
           </OverlayTrigger>
         </Form.Group>
         <Form.Group className="mb-3" controlId="register.fullname">
@@ -221,7 +245,7 @@ const RegisterView = () => {
             delay={{ show: 250, hide: 400 }}
             overlay={renderTooltip("Fullname is required ! Fullname must not contain special characters and number ! ")}
           >
-            <Form.Control type="text" placeholder="Fullname" onBlur={onInputFocusOut} onChange={onInputChange} />
+            <Form.Control value={signup.fullname} type="text" placeholder="Fullname" onBlur={onInputFocusOut} onChange={onInputChange} />
           </OverlayTrigger>
         </Form.Group>
         <Form.Group className="mb-3" controlId="register.email">
@@ -231,7 +255,7 @@ const RegisterView = () => {
             delay={{ show: 250, hide: 400 }}
             overlay={renderTooltip("Email is required ! Email must follow [abcxyz@gmail.com] ")}
           >
-            <Form.Control type="email" placeholder="Email" onBlur={onInputFocusOut} onChange={onInputChange} />
+            <Form.Control value={signup.email} type="email" placeholder="Email" onBlur={onInputFocusOut} onChange={onInputChange} />
           </OverlayTrigger>
         </Form.Group>
         <Form.Group className="mb-3" controlId="register.phone">
@@ -241,22 +265,17 @@ const RegisterView = () => {
             delay={{ show: 250, hide: 400 }}
             overlay={renderTooltip("Phone Number must contain only number !")}
           >
-            <Form.Control type="tel" placeholder="Phone Number" onBlur={onInputFocusOut} onChange={onInputChange} />
+            <Form.Control value={signup.phoneNumber} type="tel" placeholder="Phone Number" onBlur={onInputFocusOut} onChange={onInputChange} />
           </OverlayTrigger>
         </Form.Group>
         <Form.Group className="mb-3" controlId="register.phone">
           <Form.Label>Birthday</Form.Label>
-          <OverlayTrigger
-            placement="top"
-            delay={{ show: 250, hide: 400 }}
-            overlay={renderTooltip("You must select your birthday!")}
-          >
-            {/* <DatePicker id='datePicker' onChange={(date: Date) => setStartDate(date)} selected={startDate} placeholderText="Your Birthday" /> */}
-            <DatePicker id='datePicker' onChange={(date: Date) => {
-              setSignup({...signup,birthday : date.toDateString()})
-              setStartDate(date)
-            }} selected={startDate} placeholderText="Your Birthday" />
-          </OverlayTrigger>
+          {/* <DatePicker id='datePicker' onChange={(date: Date) => setStartDate(date)} selected={startDate} placeholderText="Your Birthday" /> */}
+          <DatePicker id='datePicker' onChange={(date: Date) => {
+            setSignup({ ...signup, birthday: date.toDateString() })
+            setStartDate(date)
+          }} selected={startDate} placeholderText="Your Birthday" />
+
         </Form.Group>
         <Form.Group className="mb-3">
           <Form.Label>Address</Form.Label>
@@ -265,7 +284,7 @@ const RegisterView = () => {
             delay={{ show: 250, hide: 400 }}
             overlay={renderTooltip("You must select provice!")}
           >
-            <Form.Select aria-label="Default select example" id="province" onChange={onSelectionChange} onBlur={onSelectFocusOut}>
+            <Form.Select value={provinceCode} aria-label="Default select example" id="province" onChange={onSelectionChange} onBlur={onSelectFocusOut}>
               <option value={0}>Province</option>
               {
                 provinces.map((province) => (<option key={province.code} value={province.code}>{province.name}</option>))
@@ -280,7 +299,7 @@ const RegisterView = () => {
             delay={{ show: 250, hide: 400 }}
             overlay={renderTooltip("You must select district!")}
           >
-            <Form.Select aria-label="Default select example" id="district" onChange={onSelectionChange} onBlur={onSelectFocusOut}>
+            <Form.Select value={districtCode} aria-label="Default select example" id="district" onChange={onSelectionChange} onBlur={onSelectFocusOut}>
               <option value={0}>District</option>
               {
                 districts.map(district => (<option key={district.code} value={district.code}>{district.name}</option>))
@@ -295,7 +314,7 @@ const RegisterView = () => {
             delay={{ show: 250, hide: 400 }}
             overlay={renderTooltip("You must select ward!")}
           >
-            <Form.Select aria-label="Default select example" id="ward" onChange={onSelectionChange} onBlur={onSelectFocusOut}>
+            <Form.Select value={wardCode} aria-label="Default select example" id="ward" onChange={onSelectionChange} onBlur={onSelectFocusOut}>
               <option value={0}>Ward</option>
               {
                 wards.map(ward => (<option key={ward.code} value={ward.code}>{ward.name}</option>))
@@ -311,11 +330,30 @@ const RegisterView = () => {
             delay={{ show: 250, hide: 400 }}
             overlay={renderTooltip("Address is required ! ")}
           >
-            <Form.Control type="text" placeholder="House number, Road, ... " onBlur={onInputFocusOut} onChange={onInputChange} />
+            <Form.Control value={signup.address} type="text" placeholder="House number, Road, ... " onBlur={onInputFocusOut} onChange={onInputChange} />
           </OverlayTrigger>
         </Form.Group>
         <Button id='registerBtn' variant="primary" type="submit" onClick={onClick}>Sign Up</Button>
       </Form>
+
+      <Modal show={modal.isOpen} 
+        onHide={handleModalClose} 
+        size="lg"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered>
+        <Modal.Header closeButton>
+          <Modal.Title>{}</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleModalClose}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={handleModalClose}>
+            Save Changes
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div >
   )
 }

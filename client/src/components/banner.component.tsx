@@ -1,8 +1,8 @@
-import React from 'react'
 import '../styles/banner.style.scss'
 import MyCarousel from './carousel.component'
 import { Link } from 'react-router-dom';
 import '../styles/banner.style.scss'
+
 const Banner = () => {
   return (
     <div className='banner'>

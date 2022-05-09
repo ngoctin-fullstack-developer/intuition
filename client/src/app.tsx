@@ -20,6 +20,7 @@ const App = () => {
             <Route path='/register' element={<RegisterView/>}  />
             <Route path='/login' element={<LoginView/>}  />
             <Route path='/' element={<HomeView/>} />
+            
         </Routes>
     </div>
   )

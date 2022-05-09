@@ -10,4 +10,6 @@ export default class UserController {
         }
         return response.status(301).json("Empty Users List !");
     }
+
+    
 }

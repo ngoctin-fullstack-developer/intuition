@@ -8,7 +8,7 @@ export default class Validator{
         return regex.test(password);
     }
     static isValidFullname(fullname:string) {
-        var regex = /^[a-zA-Z]{4,}(?: [a-zA-Z]+){0,2}$/i;
+        var regex = /^[a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂẾưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ\s\W|_]+$/i;
         return regex.test(fullname);
     }
     static isValidEmail(email : string){
