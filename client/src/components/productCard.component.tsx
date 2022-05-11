@@ -25,7 +25,7 @@ const ProductCard = (product : IProduct) => {
                                     <span className="p-name">{product.name}</span>
                                     {/* <span className="p-company">Yeezy</span> */}
                                 </div>
-                                <div className="a-size">{"Available sizes :"}   
+                                <div className="a-size">{"Available sizes : "}   
                                 {product.sizes.map(size => <span className="size">{size}</span>)}
                                 </div>
                                 <div className="a-buttons"> 

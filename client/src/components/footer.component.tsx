@@ -81,7 +81,7 @@ const Footer = () => {
                 &#8595;
             </button>
             <div className='footer__copyright' >
-                <p>© Bản quyền 2021 bởi Công ty TNHH Rocklin - Đã đăng ký.</p>
+                <p>© Bản quyền 2021 bởi : ngoctin.fullstack.developer@gmail.com</p>
                 <Link to="#">Điều khoản sử dụng</Link>
                 <p>|</p>
                 <Link to="#">Chính sách bảo mật</Link>
