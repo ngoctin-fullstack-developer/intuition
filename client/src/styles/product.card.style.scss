@@ -282,7 +282,7 @@
   transform: translate(-50%, -50%);
 }
 
-.cart .add-to-cart button {
+.cart .add-to-cart .txt {
   font-size: 12px;
   color: #fff;
   letter-spacing: 0.045em;
@@ -291,4 +291,5 @@
   width: 100%;
   border: none;
   background-color: transparent;
+  text-decoration: none;
 }

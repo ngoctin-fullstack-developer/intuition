@@ -2,6 +2,7 @@ import React from 'react'
 import { IProduct } from '../models/product.model';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import '../styles/product.card.style.scss'
+import { Link } from 'react-router-dom';
 
 const ProductCard = (product : IProduct) => {
 
@@ -37,12 +38,12 @@ const ProductCard = (product : IProduct) => {
                             <div className="h-bg">
                                 <div className="h-bg-inner" />
                             </div>
-                            <a className="cart" href="#">
+                            <Link className="cart" to={`/ProductDetail/{${product.id}}`}>
                                 <span className="price">{product.price}</span>
                                 <span className="add-to-cart">
-                                    <button>Details</button>
+                                    <span className='txt'>Detail</span>
                                 </span>
-                            </a>
+                            </Link>
                         </div>
                     </div>
                 </div>
