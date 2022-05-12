@@ -38,7 +38,7 @@ const ProductCard = (product : IProduct) => {
                             <div className="h-bg">
                                 <div className="h-bg-inner" />
                             </div>
-                            <Link className="cart" to={`/ProductDetail/{${product.id}}`}>
+                            <Link className="cart" to={`/ProductDetail/${product.id}`}>
                                 <span className="price">{product.price}</span>
                                 <span className="add-to-cart">
                                     <span className='txt'>Detail</span>

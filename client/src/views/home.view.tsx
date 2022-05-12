@@ -16,7 +16,7 @@ const HomeView = () => {
       <Header/>
       <Banner/>
       <Categories/>
-      <Products/>
+      <Products title='Products'/>
       <Trend/>
       <Discount/>
       <Footer/>

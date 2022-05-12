@@ -1,8 +1,7 @@
-import { height } from '@mui/system'
-import React from 'react'
 import {Routes,Route} from 'react-router-dom'
 import HomeView from './views/home.view'
 import LoginView from './views/login.view'
+import ProductDetailView from './views/product.detail.view'
 import RegisterView from './views/register.view'
 
 const App = () => {
@@ -20,7 +19,7 @@ const App = () => {
             <Route path='/register' element={<RegisterView/>}  />
             <Route path='/login' element={<LoginView/>}  />
             <Route path='/' element={<HomeView/>} />
-            
+            <Route path='/ProductDetail/:productID' element={<ProductDetailView/>}/>
         </Routes>
     </div>
   )

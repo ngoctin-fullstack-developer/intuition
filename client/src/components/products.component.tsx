@@ -3,7 +3,10 @@ import '../styles/products.style.scss'
 import { Row, Col, Card, Button } from 'react-bootstrap'
 import ProductCard from '../components/productCard.component'
 import { IProduct } from '../models/product.model'
-const Products = () => {
+interface Props {
+    title : string
+}
+const Products = (params : Props) => {
 
     const products : Array<IProduct> = [
         {
@@ -106,7 +109,7 @@ const Products = () => {
 
     return (
         <div className='products'>
-            <h1>Products</h1>
+            <h1>{params.title}</h1>
             <Row xs={1} md={4} className="g-4">
                 {
                     products.map(product => (
