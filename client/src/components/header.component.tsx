@@ -25,14 +25,7 @@ const Header = () => {
                 <button onClick={handleMyCartShow} ><ShoppingBasketOutlinedIcon /></button>
                 <Link to="/login">Login</Link>
             </div>
-            <Offcanvas show={myCartShow} onHide={handleMyCartClose} placement="end" >
-                <Offcanvas.Header closeButton>
-                <Offcanvas.Title>My Cart</Offcanvas.Title>
-                </Offcanvas.Header>
-                <Offcanvas.Body>
-                <button>Checkout</button>
-                </Offcanvas.Body>
-            </Offcanvas>
+            
             <Offcanvas show={searchShow} onHide={handleSearchClose} placement="start" >
                 <Offcanvas.Header closeButton>
                 <Offcanvas.Title>Search Products</Offcanvas.Title>

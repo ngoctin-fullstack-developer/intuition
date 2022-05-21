@@ -8,13 +8,17 @@ export default class AuthMiddleware {
     static authenToken(request: Request, response: Response, next: NextFunction): void {
         const authorizationHeader: string = request.headers['authorization'] !== undefined ? request.headers['authorization'] : '';
         const token = authorizationHeader.split(' ')[1];
-        if (!token) response.sendStatus(401);
-        const secretKey = process.env.ACCESS_TOKEN_SECRET;
-        if (secretKey) {
-            JWT.verify(token, secretKey, (err, data) => {
-                if (err) response.sendStatus(401);
-                next();
-            })
+        console.log('Token : ' + token);
+        if (!token) {
+            response.sendStatus(401)
+        }else {
+            const secretKey = process.env.ACCESS_TOKEN_SECRET;
+            if (secretKey) {
+                JWT.verify(token, secretKey, (err, data) => {
+                    if (err) response.sendStatus(401);
+                    next();
+                })
+            }
         }
     }
     static generateToken(user: User): string {
@@ -25,11 +29,11 @@ export default class AuthMiddleware {
         }
         return accessToken;
     }
-    static generateRefreshToken(username:string, password : string) : string {
+    static generateRefreshToken(username: string, password: string): string {
         var secretKey = process.env.REFRESH_TOKEN_SECRET;
         var refreshToken = '';
         if (secretKey) {
-            refreshToken = JWT.sign({username,password}, secretKey, {expiresIn : '25200s' ,algorithm: 'HS256' });
+            refreshToken = JWT.sign({ username, password }, secretKey, { expiresIn: '25200s', algorithm: 'HS256' });
         }
         return refreshToken;
     }
@@ -41,10 +45,10 @@ export default class AuthMiddleware {
                 fullname: Object.values(decodedToken)[1],
                 username: Object.values(decodedToken)[2],
                 password: Object.values(decodedToken)[3],
-                email : Object.values(decodedToken)[4],
-                phoneNumber : Object.values(decodedToken)[5],
-                birthday : Object.values(decodedToken)[6],
-                address : Object.values(decodedToken)[7],
+                email: Object.values(decodedToken)[4],
+                phoneNumber: Object.values(decodedToken)[5],
+                birthday: Object.values(decodedToken)[6],
+                address: Object.values(decodedToken)[7],
                 role: Object.values(decodedToken)[8]
             }
             console.log("user : " + Object.values(user));

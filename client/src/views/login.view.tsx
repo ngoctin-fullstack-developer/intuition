@@ -2,13 +2,14 @@ import React, { useState } from 'react'
 import { Form, Button, Tooltip, OverlayTrigger } from 'react-bootstrap'
 import { Link } from 'react-router-dom';
 import { ISignin } from '../models/signin.model';
+import AuthService from '../services/auth.service';
 import '../styles/register.style.scss'
 
 const LoginView = () => {
 
-    const [singin,setSignin] = useState<ISignin>({
-        username : '',
-        password : ''
+    const [singin, setSignin] = useState<ISignin>({
+        username: '',
+        password: ''
     })
     console.log(singin.username)
     console.log(singin.password)
@@ -18,15 +19,21 @@ const LoginView = () => {
     );
 
     async function onClick(event: React.MouseEvent) {
-        // call api to sign in
+        event.preventDefault();
+        const response = await AuthService.login(singin);
+        if(response === true){
+            console.log("Successfully !")
+        }else{
+            console.log("Failed !")
+        }
     }
 
     async function onInputChange(event: React.ChangeEvent<HTMLInputElement>) {
         var inputID = event.currentTarget.getAttribute('id');
-        if(inputID === 'login.username'){
-            setSignin({...singin,username : event.target.value})
-        }else if(inputID === 'login.password'){
-            setSignin({...singin,password : event.target.value})
+        if (inputID === 'login.username') {
+            setSignin({ ...singin, username: event.target.value })
+        } else if (inputID === 'login.password') {
+            setSignin({ ...singin, password: event.target.value })
         }
     }
 

@@ -10,6 +10,8 @@ export default class Product{
     public insertDate : string;
     public modifiedId : string;
     public modifiedDate : string;
+    public sizes : Array<string>;
+    public images : Array<string>;
 
   constructor(
     no: string, 
@@ -22,7 +24,9 @@ export default class Product{
     insertId: string, 
     insertDate: string, 
     modifiedId: string, 
-    modifiedDate: string
+    modifiedDate: string,
+    sizes : Array<string>,
+    images : Array<string>
 ) {
     this.no = no
     this.name = name
@@ -35,6 +39,8 @@ export default class Product{
     this.insertDate = insertDate
     this.modifiedId = modifiedId
     this.modifiedDate = modifiedDate
+    this.sizes = sizes
+    this.images = images
   }
     // ENTP_NO
     // CATE_NO

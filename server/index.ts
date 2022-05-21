@@ -4,6 +4,7 @@ import bodyParser from 'body-parser'
 import userRouter from './routes/user.router';
 import authRouter from './routes/auth.router'
 import categoryRouter from './routes/category.router'
+import productRouter from './routes/product.router';
 var port = process.env.PORT || 8080;
 const app = express();
 
@@ -23,6 +24,7 @@ app.use(bodyParser.json());
 app.use('/api/user',userRouter);
 app.use('/api/auth',authRouter);
 app.use('/api/category',categoryRouter);
+app.use('/api/product',productRouter);
 
 /** App Running */
 app.listen(port,()=>{

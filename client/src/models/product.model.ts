@@ -1,8 +1,16 @@
 export interface IProduct {
-    id : string,
+    no : string,
     name : string,
-    price : number,
+    price : string,
     description : string,
-    sizes : string[],
-    images : string[]
+    quantity : number,
+    entp_no : number,
+    cate_no : number,
+    insert_id : string,
+    insert_date : string,
+    modify_id : string,
+    modified_date : string,
+    sizes : Array<string>,
+    images :Array<string>
 }
+

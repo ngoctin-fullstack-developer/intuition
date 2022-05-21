@@ -19,15 +19,15 @@ const ProductCard = (product : IProduct) => {
                 <div className="row">
                     <div className="el-wrapper">
                         <div className="box-up">
-                            <img className="img" src={product.images[0]} alt="image" />
-                            {/* <img className="img" src="/images/shirt01.jpg" alt="image" /> */}
+                            {/* <img className="img" src={product.images[0]} alt="image" /> */}
+                            <img className="img" src="/images/shirt01.jpg" alt="image" />
                             <div className="img-info">
                                 <div className="info-inner">
                                     <span className="p-name">{product.name}</span>
                                     {/* <span className="p-company">Yeezy</span> */}
                                 </div>
                                 <div className="a-size">{"Available sizes : "}   
-                                {product.sizes.map(size => <span className="size">{size}</span>)}
+                                {product.sizes.map(size => <span className="size">{` ${size}`}</span>)}
                                 </div>
                                 <div className="a-buttons"> 
                                 <button id='addToCartBtn' onClick={onClick} ><AddShoppingCartIcon/></button>
@@ -38,7 +38,7 @@ const ProductCard = (product : IProduct) => {
                             <div className="h-bg">
                                 <div className="h-bg-inner" />
                             </div>
-                            <Link className="cart" to={`/ProductDetail/${product.id}`}>
+                            <Link className="cart" to={`/ProductDetail/${product.no}`}>
                                 <span className="price">{product.price}</span>
                                 <span className="add-to-cart">
                                     <span className='txt'>Detail</span>
