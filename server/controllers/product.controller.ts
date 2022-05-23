@@ -13,4 +13,13 @@ export default class ProductController {
             products : products
         })
     }
+
+    static async getProductsByLikeName(request : Request, response : Response){
+        var searchValue : string = request.params.searchValue;
+        var limit : number = Number(request.params.limit);
+        var products = await ProductDatabseOperation.getProductsByLikeName(searchValue,limit);
+        return response.json({
+            products
+        })
+    }
 }

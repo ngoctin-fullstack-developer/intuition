@@ -3,18 +3,20 @@ import MyDropdown from './dropdown.component'
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import ShoppingBasketOutlinedIcon from '@mui/icons-material/ShoppingBasketOutlined';
 import { Link } from 'react-router-dom';
-import {Offcanvas} from 'react-bootstrap'
 import {useState} from 'react'
+import { AppDispatch } from '../app/store';
+import { useDispatch } from 'react-redux';
+import {setSearchBoxShown,setMyCartShown} from '../app/slices/canvas.slice' 
+import SearchBox from './searchbox.component';
+import MyCart from './cart.component';
 
 const Header = () => {
 
-    const [myCartShow, setMyCartShow] = useState(false);
-    const [searchShow, setSearchShow] = useState(false);
-    const handleMyCartClose = () => setMyCartShow(false);
-    const handleMyCartShow = () => {setMyCartShow(true)};
-    const handleSearchClose = () => setSearchShow(false);
-    const handleSearchShow = () => {setSearchShow(true)};
+    const [counter,setCounter] = useState(0);
 
+    const dispatch : AppDispatch = useDispatch();
+    const handleSearchShow = () => {dispatch(setSearchBoxShown())};
+    const handleCartShow = () => {dispatch(setMyCartShown())};    
     return (
         <div className='header'>
             <div className='__left' >
@@ -22,18 +24,19 @@ const Header = () => {
                 <h2>Intuition.</h2></div>
             <div className='__right' >
                 <button onClick={handleSearchShow} ><SearchOutlinedIcon /></button>
-                <button onClick={handleMyCartShow} ><ShoppingBasketOutlinedIcon /></button>
+                <button onClick={handleCartShow} ><ShoppingBasketOutlinedIcon /></button>
                 <Link to="/login">Login</Link>
             </div>
-            
-            <Offcanvas show={searchShow} onHide={handleSearchClose} placement="start" >
+            <SearchBox/>
+            <MyCart/>
+            {/* <Offcanvas show={searchShow} onHide={handleSearchClose} placement="start" >
                 <Offcanvas.Header closeButton>
                 <Offcanvas.Title>Search Products</Offcanvas.Title>
                 </Offcanvas.Header>
                 <Offcanvas.Body>
                 <button>Checkout</button>
                 </Offcanvas.Body>
-            </Offcanvas>
+            </Offcanvas> */}
         </div>
     )
 }

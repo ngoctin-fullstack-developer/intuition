@@ -1,0 +1,12 @@
+.offcanvas-body {
+    display: flex;
+    flex-direction: column;
+    >input{
+        width: 100%;
+        padding-bottom: 2px;
+        outline: none;
+        border: none;
+        border-bottom:  1px solid ;
+        margin-bottom: 50px;
+    }
+}

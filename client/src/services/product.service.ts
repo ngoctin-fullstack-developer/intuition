@@ -7,4 +7,9 @@ export default class ProductService{
         if(response) return response;
         return [];
     }
+    static async getProductsByLikeName(searchValue : string, limit : number){
+        var response = await ProductAPI.getProductsByLikeName(searchValue,limit);
+        if(response) return response;
+        return [];
+    }
 }

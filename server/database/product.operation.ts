@@ -26,4 +26,15 @@ export default class ProductDatabseOperation {
         }
         return returnValues;
     }
+
+    static async getProductsByLikeName(searchValue : string, limit : number){
+        var connection = await DBConnect.connect(DBConfig);
+        var sql = 'SELECT * FROM TPRODUCTS P '
+        + `WHERE P.name LIKE  + '%${searchValue}%' `
+        + 'ORDER BY P.insert_date '
+        + 'OFFSET 0 ROWS '
+        + `FETCH NEXT ${limit} ROWS ONLY`;
+        var result = await connection.request().query(sql);
+        return result.recordset;
+    }
 }
