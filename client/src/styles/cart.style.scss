@@ -1,0 +1,105 @@
+.cart {
+    display: flex;
+    flex-direction: column;
+    position: relative !important;
+    .__text {
+        display: flex;
+        h5{
+            font-size: 18px;
+        }
+        h5:first-child {
+            flex: 1;
+        }
+        h5:last-child {
+            flex: 2;
+        }
+    }
+    .line {
+        width: 100%;
+        height: 1px;
+        border-bottom: 1px solid #c4c1c0;
+        opacity: 40%;
+    }
+    >.btn {
+        width: 97%;
+        height: 50px;
+        margin-top: 20px;
+        margin-bottom: 40px;
+    }
+    >.list-group {
+        width: 97%;
+        > .list-group-item {
+            min-height: 120px;
+            margin-bottom: 20px;
+            border: 1px solid #393d46;
+            display: flex;
+            border-radius: 5px;
+            > img {
+                width: 35%;
+                height: 100px;
+                object-fit: contain;
+                border-radius: 5px;
+                margin-right: 5%;
+            }
+            .__content {
+                display: flex;
+                width: 65%;
+                flex-direction: column;
+                .__top {
+                    display: flex;
+                    flex: 1;
+                    align-items: center;
+                    >a {
+                        color: #393d46;
+                        font-size: 18px;
+                        width: 95%;
+                        text-decoration: none;
+                        display: flex;
+                        flex-wrap: wrap;
+                    }
+                    >svg{
+                        width: 24px;
+                        height: 24px;
+                        cursor: pointer;
+                    }
+                    button{
+                        border: none;
+                        background-color: transparent;
+                    }
+                }
+                .__bottom {
+                    flex: 1;
+                    display: flex;
+                    margin-top: 20px;
+                    ._qty{
+                        width: 15%;
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        input{
+                            width: 90%;
+                            border: none;
+                            text-align: center;
+                            outline: none;
+                        }
+                        svg{
+                            cursor: pointer;
+                        }
+                        button{
+                            border: none;
+                            background-color: transparent;
+                        }
+                    }
+                    .__price{
+                        width: 85%;
+                        text-align: center;
+                        display: flex;
+                        align-items: flex-end;
+                        justify-content: flex-end;
+                    }
+
+                }
+            }
+        }
+    }
+}

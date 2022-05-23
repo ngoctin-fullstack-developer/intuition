@@ -9,13 +9,18 @@ import StarIcon from '@mui/icons-material/Star';
 import ColorCircle from '../components/color.circle.component';
 import { Tabs, Tab } from 'react-bootstrap'
 import Products from '../components/products.component';
+import {setSearchBoxHidden} from '../app/slices/canvas.slice'
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '../app/store';
 const ProductDetailView = () => {
 
     const { productID } = useParams();
     const [key, setKey] = useState('productdetail');
     const [images, setImages] = useState<ImageType[]>();
+    const dispatch : AppDispatch = useDispatch();
 
     useEffect(() => {
+        dispatch(setSearchBoxHidden());
         setImages(
             Array.from(Array(5).keys()).map((id) => ({
                 id,
