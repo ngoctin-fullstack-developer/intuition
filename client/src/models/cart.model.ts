@@ -25,7 +25,7 @@ export const initialCart: ICart = {
                 insert_id: 'ngoctin',
                 modified_date: '23/05/2022',
                 modify_id: 'ngoctin',
-                price: '100.000',
+                price: '100000',
                 quantity: 10,
                 sizes: ['S', 'M', 'L', 'XL', 'XXL']
             },
@@ -33,7 +33,7 @@ export const initialCart: ICart = {
         },
         {
             product: {
-                no: '1',
+                no: '2',
                 name: 'Product',
                 cate_no: 1,
                 description: 'description ',
@@ -43,7 +43,7 @@ export const initialCart: ICart = {
                 insert_id: 'ngoctin',
                 modified_date: '23/05/2022',
                 modify_id: 'ngoctin',
-                price: '100.000',
+                price: '100000',
                 quantity: 10,
                 sizes: ['S', 'M', 'L', 'XL', 'XXL']
             },
@@ -51,7 +51,7 @@ export const initialCart: ICart = {
         },
         {
             product: {
-                no: '1',
+                no: '3',
                 name: 'Product',
                 cate_no: 1,
                 description: 'description ',
@@ -61,7 +61,7 @@ export const initialCart: ICart = {
                 insert_id: 'ngoctin',
                 modified_date: '23/05/2022',
                 modify_id: 'ngoctin',
-                price: '100.000',
+                price: '100000',
                 quantity: 10,
                 sizes: ['S', 'M', 'L', 'XL', 'XXL']
             },
@@ -69,7 +69,7 @@ export const initialCart: ICart = {
         },
         {
             product: {
-                no: '1',
+                no: '4',
                 name: 'Product',
                 cate_no: 1,
                 description: 'description ',
@@ -79,7 +79,7 @@ export const initialCart: ICart = {
                 insert_id: 'ngoctin',
                 modified_date: '23/05/2022',
                 modify_id: 'ngoctin',
-                price: '100.000',
+                price: '100000',
                 quantity: 10,
                 sizes: ['S', 'M', 'L', 'XL', 'XXL']
             },
@@ -87,7 +87,7 @@ export const initialCart: ICart = {
         },
         {
             product: {
-                no: '1',
+                no: '5',
                 name: 'Product',
                 cate_no: 1,
                 description: 'description ',
@@ -97,7 +97,7 @@ export const initialCart: ICart = {
                 insert_id: 'ngoctin',
                 modified_date: '23/05/2022',
                 modify_id: 'ngoctin',
-                price: '100.000',
+                price: '100000',
                 quantity: 10,
                 sizes: ['S', 'M', 'L', 'XL', 'XXL']
             },
@@ -105,5 +105,5 @@ export const initialCart: ICart = {
         },
     ],
     quantity : 5,
-    total : 500000
+    total : 2500000
 }

@@ -1,13 +1,13 @@
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux'
-import { AppDispatch, canvasSelector } from '../app/store'
+import { AppDispatch, canvasSelector, cartSelector } from '../app/store'
 import { ListGroup, Offcanvas, Button } from 'react-bootstrap'
 import { setMyCartHidden } from '../app/slices/canvas.slice';
-import { ICartItem, initialCart as cart } from '../models/cart.model';
+import { ICart, ICartItem } from '../models/cart.model';
 import CloseIcon from '@mui/icons-material/Close';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import { removeFromCart } from '../app/slices/cart.slice';
+import { removeFromCart, updateQuantity } from '../app/slices/cart.slice';
 import { Link } from 'react-router-dom';
 import '../styles/cart.style.scss'
 import React, { useState } from 'react';
@@ -15,20 +15,41 @@ const MyCart = () => {
     const { isMyCartShown, isEnableScroll } = useSelector(canvasSelector);
     const dispatch: AppDispatch = useDispatch();
     const handleCartClose = () => { dispatch(setMyCartHidden()) };
-    const [selectedProduct, setSelectedProduct] = useState<ICartItem|null>(null)
 
-    function onClickHandler(event : React.MouseEvent) {
-        const btnID = event.currentTarget.getAttribute('id');
-        switch (btnID) {
-            case 'btnRemoveFromCart':
-                
-                
-                break;
-        
-            default:
-                break;
+    function onRemoveItem(item : ICartItem){
+        dispatch(removeFromCart(item))
+    }
+    function changeQuantity(type : string,item : ICartItem,quantity : number){
+        if(quantity === 1){
+            if(type === 'decrement' && item.quantity === 1){
+                dispatch(removeFromCart(item))
+            }else{
+                dispatch(updateQuantity({type,item, quantity}));    
+            }
+        }else{
+            var diff = Number(item.quantity) - quantity;
+            if(diff > 0){
+                // increment
+                dispatch(updateQuantity({
+                    type : 'increment',
+                    item : item,
+                    quantity : quantity
+                }));
+            }else{
+                // decrement
+                dispatch(updateQuantity({
+                    type : 'decrement',
+                    item : item,
+                    quantity : quantity
+                }));
+            }
         }
     }
+
+
+    const cart = useSelector(cartSelector)
+
+
     return (
         <Offcanvas show={isMyCartShown} onHide={handleCartClose} placement='end' scroll={isEnableScroll}>
             <Offcanvas.Header closeButton>
@@ -48,13 +69,13 @@ const MyCart = () => {
                             <div className='__content' >
                                 <div className='__top' >
                                     <Link to='/ProductDetail/:productID' >{item.product.name}</Link>
-                                    <button id='btnRemoveFromCart' ><CloseIcon/></button>
+                                    <button id='btnRemoveFromCart' onClick={() => onRemoveItem(item)}  ><CloseIcon/></button>
                                 </div>
                                 <div className='__bottom' >
                                     <div className='_qty'>
-                                        <button><KeyboardArrowUpIcon/></button>
-                                        <input type="text" name="" id="" value={10} />
-                                        <button><KeyboardArrowDownIcon/></button>
+                                        <button onClick={()=> changeQuantity('increment',item,1)} ><KeyboardArrowUpIcon/></button>
+                                        <input type="text" name="" id="" value={item.quantity} />
+                                        <button onClick={()=> changeQuantity('decrement',item,1)}><KeyboardArrowDownIcon/></button>
                                     </div>
                                     <p className='__price' >100.000</p>
                                 </div>
