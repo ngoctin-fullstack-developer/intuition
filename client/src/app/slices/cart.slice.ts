@@ -55,6 +55,17 @@ export const cartSlice = createSlice({
                         }
                     }
                     break;
+                    for (let index = 0; index < state.items.length; index++) {
+                        const element = state.items[index];
+                        if (element.product.no === action.payload.item.product.no) {
+                            element.quantity -= action.payload.quantity;
+                            state.quantity -= action.payload.quantity;
+                            console.log(Number(element.product.price))
+                            console.log(action.payload.quantity)
+                            state.total -= (Number(element.product.price) * action.payload.quantity)
+                        }
+                    }
+                    break;
             }
         }
     }

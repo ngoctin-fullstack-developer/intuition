@@ -90,11 +90,32 @@
                             background-color: transparent;
                         }
                     }
-                    .__price{
-                        width: 85%;
+                    .__size{
+                        width: 20%;
                         text-align: center;
                         display: flex;
                         align-items: flex-end;
+                        justify-content: flex-end;
+                        margin-bottom: 14.735%;
+                    }
+                    .__color{
+                        width: 12%;
+                        margin-left: 8%;
+                        height: 16px;
+                        margin-top: 16%;
+                        border-radius: 50px;
+                        text-align: center;
+                        display: flex;
+                        align-items: flex-end;
+                        justify-content: flex-end;
+                        margin-bottom: 14.735% ;
+                    }
+                    .__price{
+                        width: 35%;
+                        text-align: center;
+                        display: flex;
+                        align-items: flex-end;
+                        margin-bottom: 14.735%;
                         justify-content: flex-end;
                     }
 
