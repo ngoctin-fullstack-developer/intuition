@@ -3,10 +3,10 @@ import MyDropdown from './dropdown.component'
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import ShoppingBasketOutlinedIcon from '@mui/icons-material/ShoppingBasketOutlined';
 import { Link } from 'react-router-dom';
-import {useState} from 'react'
+import {useState,useEffect} from 'react'
 import { AppDispatch } from '../app/store';
 import { useDispatch } from 'react-redux';
-import {setSearchBoxShown,setMyCartShown} from '../app/slices/canvas.slice' 
+import {setSearchBoxShown,setMyCartShown,setMyCartHidden,setSearchBoxHidden} from '../app/slices/canvas.slice' 
 import SearchBox from './searchbox.component';
 import MyCart from './cart.component';
 
@@ -16,7 +16,13 @@ const Header = () => {
 
     const dispatch : AppDispatch = useDispatch();
     const handleSearchShow = () => {dispatch(setSearchBoxShown())};
-    const handleCartShow = () => {dispatch(setMyCartShown())};    
+    const handleCartShow = () => {dispatch(setMyCartShown())};
+    
+    useEffect(() => {
+      dispatch(setMyCartHidden());
+      dispatch(setSearchBoxHidden());
+    }, [])
+        
     return (
         <div className='header'>
             <div className='__left' >
@@ -29,14 +35,6 @@ const Header = () => {
             </div>
             <SearchBox/>
             <MyCart/>
-            {/* <Offcanvas show={searchShow} onHide={handleSearchClose} placement="start" >
-                <Offcanvas.Header closeButton>
-                <Offcanvas.Title>Search Products</Offcanvas.Title>
-                </Offcanvas.Header>
-                <Offcanvas.Body>
-                <button>Checkout</button>
-                </Offcanvas.Body>
-            </Offcanvas> */}
         </div>
     )
 }

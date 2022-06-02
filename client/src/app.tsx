@@ -1,4 +1,5 @@
 import {Routes,Route} from 'react-router-dom'
+import CheckoutView from './views/checkout.view'
 import HomeView from './views/home.view'
 import LoginView from './views/login.view'
 import ProductDetailView from './views/product.detail.view'
@@ -20,6 +21,7 @@ const App = () => {
             <Route path='/login' element={<LoginView/>}  />
             <Route path='/' element={<HomeView/>} />
             <Route path='/ProductDetail/:productID' element={<ProductDetailView/>}/>
+            <Route path='/checkout' element={<CheckoutView/>} ></Route>
         </Routes>
     </div>
   )

@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { stat } from "fs";
 import { useDispatch } from "react-redux";
 import { isTemplateExpression } from "typescript";
 import { ICartItem, initialCart } from "../../models/cart.model";

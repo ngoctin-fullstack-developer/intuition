@@ -104,6 +104,6 @@ export const initialCart: ICart = {
             quantity: 5
         },
     ],
-    quantity : 5,
+    quantity : 25,
     total : 2500000
 }

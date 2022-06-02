@@ -13,7 +13,6 @@ import { AppDispatch } from '../app/store';
 const CartItem = (item: ICartItem) => {
     const dispatch: AppDispatch = useDispatch();
     const [currQuantity, setCurrQuantity] = useState<Number>(item.quantity);
-    useEff
     function onRemoveItem(item: ICartItem) {
         dispatch(removeFromCart(item))
     }
