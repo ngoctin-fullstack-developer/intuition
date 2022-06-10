@@ -7,10 +7,13 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import '../styles/horizontalLinearStepper.style.scss'
 import CheckoutCart from "./checkout.cart.component";
-import { cartSelector } from "../app/store";
+import { AppDispatch, cartSelector } from "../app/store";
 import { useSelector } from "react-redux";
 import CheckoutAddress from "./checkout.address.component";
 import CheckoutPayment from "./checkout.payment";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { clearCart } from '../app/slices/cart.slice';
 
 const HorizontalLinearStepper = () => {
   const cart = useSelector(cartSelector);
@@ -20,33 +23,24 @@ const HorizontalLinearStepper = () => {
     "Payment"
   ];
   const [activeStep, setActiveStep] = React.useState(0);
-  const [skipped, setSkipped] = React.useState(new Set<number>());
-
-  //   const isStepOptional = (step: number) => {
-  //     return step === 1;
-  //   };
-
-  const isStepSkipped = (step: number) => {
-    return skipped.has(step);
-  };
-
+  // const [skipped, setSkipped] = React.useState(new Set<number>());
+  const navigate = useNavigate();
+  const dispatch : AppDispatch = useDispatch();
   const handleNext = () => {
-    let newSkipped = skipped;
-    if (isStepSkipped(activeStep)) {
-      newSkipped = new Set(newSkipped.values());
-      newSkipped.delete(activeStep);
-    }
-
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    setSkipped(newSkipped);
+    if(activeStep === 2){
+      // Finish Feature Here
+      dispatch(clearCart());
+    }
   };
 
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
-  const handleReset = () => {
+  const handleCompleteOrder = () => {
     setActiveStep(0);
+    navigate('/');
   };
   return (
     <Box sx={{ width: "100%" }}>
@@ -56,14 +50,6 @@ const HorizontalLinearStepper = () => {
           const labelProps: {
             optional?: React.ReactNode;
           } = {};
-          //   if (isStepOptional(index)) {
-          //     labelProps.optional = (
-          //       <Typography variant="caption">Optional</Typography>
-          //     );
-          //   }
-          if (isStepSkipped(index)) {
-            stepProps.completed = false;
-          }
           return (
             <Step key={label} {...stepProps}>
               {/* <StepLabel {...labelProps}>{label}</StepLabel> */}
@@ -74,12 +60,14 @@ const HorizontalLinearStepper = () => {
       </Stepper>
       {activeStep === steps.length ? (
         <React.Fragment>
-          <Typography sx={{ mt: 2, mb: 1 }}>
-            All steps completed - you&apos;re finished
-          </Typography>
+          <div className="__congrat">
+            <h2>Order Completed !</h2>
+            <small>Your order will be deliveried in the next 3 - 5 days !</small>
+            <small>Thanks for choosing us ! </small>
+          </div>
           <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
             <Box sx={{ flex: "1 1 auto" }} />
-            <Button onClick={handleReset}>Reset</Button>
+            <Button onClick={handleCompleteOrder}>Continue to shopping !</Button>
           </Box>
         </React.Fragment>
       ) : (

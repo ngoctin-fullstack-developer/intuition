@@ -4,10 +4,7 @@ export default class ProductDatabseOperation {
 
     static async getNewestProducts() {
         var connection = await DBConnect.connect(DBConfig);
-        // var sql = 'SELECT * FROM TPRODUCTS P ORDER BY P.INSERT_DATE DESC ' 
-        // + 'OFFSET 0 ROWS ' +
-        // + 'FETCH NEXT 4 ROWS ONLY';
-        var sql = 'SELECT * FROM TPRODUCTS P ORDER BY P.INSERT_DATE DESC OFFSET 0 ROWS FETCH NEXT 4 ROWS ONLY';
+        var sql = 'SELECT * FROM TPRODUCTS P ORDER BY P.INSERT_DATE DESC OFFSET 0 ROWS FETCH NEXT 3 ROWS ONLY';
         var result = await connection.request().query(sql);
         return result.recordset;
     }
@@ -27,6 +24,22 @@ export default class ProductDatabseOperation {
         return returnValues;
     }
 
+    static async getColorsByProductNo(productNo : string){
+        var connection = await DBConnect.connect(DBConfig);
+        var sql = 'SELECT C.value, C.name FROM TPRODUCTS P '
+            +  'JOIN TPRODUCTCOLOR M ON P.no = M.product_no ' 
+            +  'JOIN TCOLORS C ON M.color_no = C.no '
+            +  `WHERE P.no =  ${productNo}`;
+        var result = await connection.request().query(sql);
+        var returnValues = [];
+        for (let index = 0; index < result.recordset.length; index++) {
+            const value = result.recordset[index].value;
+            const name = result.recordset[index].name;
+            returnValues.push({value,name});
+        }
+        return returnValues;
+    }
+
     static async getProductsByLikeName(searchValue : string, limit : number){
         var connection = await DBConnect.connect(DBConfig);
         var sql = 'SELECT * FROM TPRODUCTS P '
@@ -36,5 +49,13 @@ export default class ProductDatabseOperation {
         + `FETCH NEXT ${limit} ROWS ONLY`;
         var result = await connection.request().query(sql);
         return result.recordset;
+    }
+
+    static async getProductByID(productNo : string){
+        var connection = await DBConnect.connect(DBConfig);
+        var sql = 'SELECT * FROM TPRODUCTS P '
+        + `WHERE P.no = ${productNo}`;
+        var result = await connection.request().query(sql);
+        return result.recordset[0];
     }
 }

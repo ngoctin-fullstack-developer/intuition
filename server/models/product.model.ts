@@ -1,3 +1,5 @@
+import Color from "./color.model";
+
 export default class Product{
     public no :string;
     public name : string;
@@ -12,6 +14,7 @@ export default class Product{
     public modifiedDate : string;
     public sizes : Array<string>;
     public images : Array<string>;
+    public colors : Array<Color>;
 
   constructor(
     no: string, 
@@ -26,7 +29,8 @@ export default class Product{
     modifiedId: string, 
     modifiedDate: string,
     sizes : Array<string>,
-    images : Array<string>
+    images : Array<string>,
+    colors : Array<Color>
 ) {
     this.no = no
     this.name = name
@@ -41,6 +45,7 @@ export default class Product{
     this.modifiedDate = modifiedDate
     this.sizes = sizes
     this.images = images
+    this.colors = colors
   }
     // ENTP_NO
     // CATE_NO

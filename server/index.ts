@@ -5,6 +5,7 @@ import userRouter from './routes/user.router';
 import authRouter from './routes/auth.router'
 import categoryRouter from './routes/category.router'
 import productRouter from './routes/product.router';
+import orderRouter from './routes/order.router';
 var port = process.env.PORT || 8080;
 const app = express();
 
@@ -25,6 +26,7 @@ app.use('/api/user',userRouter);
 app.use('/api/auth',authRouter);
 app.use('/api/category',categoryRouter);
 app.use('/api/product',productRouter);
+app.use('/api/order',orderRouter);
 
 /** App Running */
 app.listen(port,()=>{

@@ -1,7 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { useDispatch } from "react-redux";
-import { isTemplateExpression } from "typescript";
 import { ICartItem, initialCart } from "../../models/cart.model";
+import CartService from "../../services/cart.service";
 import { AppDispatch } from "../store";
 
 export const cartSlice = createSlice({
@@ -9,9 +8,15 @@ export const cartSlice = createSlice({
     initialState: initialCart,
     reducers: {
         addToCart: (state, action: PayloadAction<ICartItem>) => {
-            state.items = [...state.items, action.payload]
+            if (CartService.isExistedItem(state, action.payload)) {
+                for (let i = 0; i < state.items.length; i++) {
+                    state.items[i].quantity += 1;
+                }
+            } else {
+                state.items = [...state.items, action.payload]
+            }
             state.quantity += action.payload.quantity;
-            state.total += Number(action.payload.product.price);
+            state.total += (Number(action.payload.product.price) * action.payload.quantity);
 
         },
         removeFromCart: (state, action: PayloadAction<ICartItem>) => {
@@ -66,8 +71,13 @@ export const cartSlice = createSlice({
                     }
                     break;
             }
+        },
+        clearCart: (state) => {
+            state.items = [];
+            state.total = 0;
+            state.quantity = 0;
         }
     }
 })
 
-export const { addToCart, removeFromCart, updateQuantity } = cartSlice.actions
+export const { addToCart, removeFromCart, updateQuantity, clearCart } = cartSlice.actions

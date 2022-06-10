@@ -123,7 +123,7 @@ const Products = (params : Props) => {
     return (
         <div className='products'>
             <h1>{params.title}</h1>
-            <Row xs={1} md={4} className="g-4">
+            <Row xs={1} md={3} className="g-4">
                 {
                     products.map(product => (
                         <Col><ProductCard {...product} /></Col>

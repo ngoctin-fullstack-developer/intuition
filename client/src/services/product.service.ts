@@ -12,4 +12,9 @@ export default class ProductService{
         if(response) return response;
         return [];
     }
+    static async getProductByID(productNo : string){
+        var response = await ProductAPI.getProductByID(productNo);
+        if(response) return response;
+        return null;
+    }
 }

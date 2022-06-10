@@ -1,16 +1,15 @@
 import React from 'react'
 import { IProduct } from '../models/product.model';
-import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import '../styles/product.card.style.scss'
 import { Link } from 'react-router-dom';
+import CurrencyUtil from '../utils/currency.util';
 
 const ProductCard = (product : IProduct) => {
-
-    function onClick(event:React.MouseEvent) {
-        var btnId = event.currentTarget.getAttribute('id');
-        if(btnId === 'addToCartBtn'){
-            
-        }
+    function onClickHandler(event:React.MouseEvent){
+        window.scrollTo({
+            top: 250,
+            behavior: 'smooth',
+        });
     }
 
     return (
@@ -29,17 +28,17 @@ const ProductCard = (product : IProduct) => {
                                 <div className="a-size">{"Available sizes : "}   
                                 {product.sizes.map(size => <span className="size">{` ${size}`}</span>)}
                                 </div>
-                                <div className="a-buttons"> 
-                                <button id='addToCartBtn' onClick={onClick} ><AddShoppingCartIcon/></button>
-                                </div>
+                                {/* <div className="a-buttons"> 
+                                <button id='addToCartBtn' onClick={onClickHandler} ><AddShoppingCartIcon/></button>
+                                </div> */}
                             </div>
                         </div>
                         <div className="box-down">
                             <div className="h-bg">
                                 <div className="h-bg-inner" />
                             </div>
-                            <Link className="cart" to={`/ProductDetail/${product.no}`}>
-                                <span className="price">{product.price}</span>
+                            <Link className="cart" onClick={onClickHandler} to={`/ProductDetail/${product.no}`}>
+                                <span className="price">{CurrencyUtil.toVND(Number(product.price))}</span>
                                 <span className="add-to-cart">
                                     <span className='txt'>Detail</span>
                                 </span>

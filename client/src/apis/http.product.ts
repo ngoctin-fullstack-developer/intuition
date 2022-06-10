@@ -21,7 +21,6 @@ export default class ProductAPI{
         }        
     }
 
-
     static async getProductsByLikeName(searchValue : string ,limit : number){
         try {
             var url = '/api/product/getProductsByLikeName'
@@ -41,5 +40,20 @@ export default class ProductAPI{
             }
         }
 
+    }
+
+    static async getProductByID(productNo : string){
+        try {
+            var url = '/api/product/getProductByID'
+                    + `/${productNo}`;
+            var response = await httpCommon.get(url);
+            var product : IProduct | null = null;
+            if(response && response.data)
+                product = response.data.product;
+            return product;
+        } catch (error) {
+            if(request.isAxiosError(error) && error.message)
+            return null;
+        }
     }
 }
