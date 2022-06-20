@@ -1,0 +1,292 @@
+USE [Intuition]
+GO
+
+/****** Object:  Table [dbo].[TCATEGORIES]    Script Date: 6/19/2022 10:09:47 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[TCATEGORIES](
+	[no] [int] NOT NULL,
+	[name] [nvarchar](50) NULL,
+	[insert_id] [nvarchar](50) NULL,
+	[insert_date] [nvarchar](100) NULL,
+	[modify_id] [nvarchar](50) NULL,
+	[modified_date] [nvarchar](100) NULL,
+ CONSTRAINT [PK_TCATEGORIES] PRIMARY KEY CLUSTERED 
+(
+	[no] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+
+USE [Intuition]
+GO
+
+/****** Object:  Table [dbo].[TCOLORS]    Script Date: 6/19/2022 10:10:06 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[TCOLORS](
+	[no] [int] NOT NULL,
+	[value] [nvarchar](50) NULL,
+	[name] [nvarchar](100) NULL,
+ CONSTRAINT [PK_TCOLORS] PRIMARY KEY CLUSTERED 
+(
+	[no] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+
+USE [Intuition]
+GO
+
+/****** Object:  Table [dbo].[TCUSTOMERS]    Script Date: 6/19/2022 10:10:22 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[TCUSTOMERS](
+	[id] [nvarchar](50) NOT NULL,
+	[fullname] [nvarchar](200) NULL,
+	[username] [nvarchar](50) NULL,
+	[password] [nvarchar](200) NULL,
+	[email] [nvarchar](300) NULL,
+	[phoneNumber] [nvarchar](50) NULL,
+	[birthday] [nvarchar](50) NULL,
+	[address] [nvarchar](4000) NULL,
+	[role] [nvarchar](10) NULL,
+ CONSTRAINT [PK_TCUSTOMERS] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+USE [Intuition]
+GO
+
+/****** Object:  Table [dbo].[TENTERPRISE]    Script Date: 6/19/2022 10:10:33 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[TENTERPRISE](
+	[no] [int] NOT NULL,
+	[name] [nvarchar](100) NOT NULL,
+ CONSTRAINT [PK_TENTERPRISE] PRIMARY KEY CLUSTERED 
+(
+	[no] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+USE [Intuition]
+GO
+
+/****** Object:  Table [dbo].[TORDERS]    Script Date: 6/19/2022 10:10:46 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[TORDERS](
+	[no] [nvarchar](50) NOT NULL,
+	[address] [nvarchar](4000) NOT NULL,
+	[quantity] [int] NOT NULL,
+	[promotion_id] [nvarchar](50) NULL,
+	[payment_method] [int] NOT NULL,
+	[subtotal] [nvarchar](50) NOT NULL,
+	[user_id] [nvarchar](50) NOT NULL,
+	[phoneNumber] [nvarchar](50) NOT NULL,
+	[fullname] [nvarchar](500) NOT NULL,
+	[status] [int] NOT NULL,
+	[insert_date] [nvarchar](50) NOT NULL,
+	[modified_date] [nvarchar](50) NULL,
+ CONSTRAINT [PK_TORDERS] PRIMARY KEY CLUSTERED 
+(
+	[no] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+
+USE [Intuition]
+GO
+
+/****** Object:  Table [dbo].[TPRODUCTCOLOR]    Script Date: 6/19/2022 10:11:00 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[TPRODUCTCOLOR](
+	[product_no] [nvarchar](50) NULL,
+	[color_no] [int] NULL
+) ON [PRIMARY]
+
+GO
+
+ALTER TABLE [dbo].[TPRODUCTCOLOR]  WITH CHECK ADD  CONSTRAINT [FK_TPRODUCTCOLOR_TCOLORS] FOREIGN KEY([color_no])
+REFERENCES [dbo].[TCOLORS] ([no])
+GO
+
+ALTER TABLE [dbo].[TPRODUCTCOLOR] CHECK CONSTRAINT [FK_TPRODUCTCOLOR_TCOLORS]
+GO
+
+ALTER TABLE [dbo].[TPRODUCTCOLOR]  WITH CHECK ADD  CONSTRAINT [FK_TPRODUCTCOLOR_TPRODUCTS] FOREIGN KEY([product_no])
+REFERENCES [dbo].[TPRODUCTS] ([no])
+GO
+
+ALTER TABLE [dbo].[TPRODUCTCOLOR] CHECK CONSTRAINT [FK_TPRODUCTCOLOR_TPRODUCTS]
+GO
+
+USE [Intuition]
+GO
+
+/****** Object:  Table [dbo].[TPRODUCTORDER]    Script Date: 6/19/2022 10:11:11 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[TPRODUCTORDER](
+	[order_no] [nvarchar](50) NOT NULL,
+	[product_no] [nvarchar](50) NOT NULL,
+	[quantity] [int] NOT NULL,
+	[color] [nvarchar](50) NULL,
+	[total] [nvarchar](50) NOT NULL
+) ON [PRIMARY]
+
+GO
+
+ALTER TABLE [dbo].[TPRODUCTORDER]  WITH CHECK ADD  CONSTRAINT [FK_TPRODUCTORDER_TORDERS] FOREIGN KEY([order_no])
+REFERENCES [dbo].[TORDERS] ([no])
+GO
+
+ALTER TABLE [dbo].[TPRODUCTORDER] CHECK CONSTRAINT [FK_TPRODUCTORDER_TORDERS]
+GO
+
+ALTER TABLE [dbo].[TPRODUCTORDER]  WITH CHECK ADD  CONSTRAINT [FK_TPRODUCTORDER_TPRODUCTS] FOREIGN KEY([product_no])
+REFERENCES [dbo].[TPRODUCTS] ([no])
+GO
+
+ALTER TABLE [dbo].[TPRODUCTORDER] CHECK CONSTRAINT [FK_TPRODUCTORDER_TPRODUCTS]
+GO
+
+USE [Intuition]
+GO
+
+/****** Object:  Table [dbo].[TPRODUCTS]    Script Date: 6/19/2022 10:11:21 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[TPRODUCTS](
+	[no] [nvarchar](50) NOT NULL,
+	[name] [nvarchar](200) NULL,
+	[price] [nvarchar](100) NULL,
+	[description] [nvarchar](4000) NULL,
+	[quantity] [int] NULL,
+	[entp_no] [int] NULL,
+	[cate_no] [int] NULL,
+	[insert_id] [nvarchar](50) NULL,
+	[insert_date] [nvarchar](50) NULL,
+	[modify_id] [nvarchar](50) NULL,
+	[modified_date] [nvarchar](50) NULL,
+ CONSTRAINT [PK_TPRODUCTS] PRIMARY KEY CLUSTERED 
+(
+	[no] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+ALTER TABLE [dbo].[TPRODUCTS]  WITH CHECK ADD  CONSTRAINT [FK_TPRODUCTS_TCATEGORIES] FOREIGN KEY([cate_no])
+REFERENCES [dbo].[TCATEGORIES] ([no])
+GO
+
+ALTER TABLE [dbo].[TPRODUCTS] CHECK CONSTRAINT [FK_TPRODUCTS_TCATEGORIES]
+GO
+
+ALTER TABLE [dbo].[TPRODUCTS]  WITH CHECK ADD  CONSTRAINT [FK_TPRODUCTS_TENTERPRISE] FOREIGN KEY([entp_no])
+REFERENCES [dbo].[TENTERPRISE] ([no])
+GO
+
+ALTER TABLE [dbo].[TPRODUCTS] CHECK CONSTRAINT [FK_TPRODUCTS_TENTERPRISE]
+GO
+
+USE [Intuition]
+GO
+
+/****** Object:  Table [dbo].[TPRODUCTSIZE]    Script Date: 6/19/2022 10:11:35 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[TPRODUCTSIZE](
+	[product_no] [nvarchar](50) NULL,
+	[size_no] [int] NULL
+) ON [PRIMARY]
+
+GO
+
+ALTER TABLE [dbo].[TPRODUCTSIZE]  WITH CHECK ADD  CONSTRAINT [FK_TPRODUCTSIZE_TPRODUCTS] FOREIGN KEY([product_no])
+REFERENCES [dbo].[TPRODUCTS] ([no])
+GO
+
+ALTER TABLE [dbo].[TPRODUCTSIZE] CHECK CONSTRAINT [FK_TPRODUCTSIZE_TPRODUCTS]
+GO
+
+ALTER TABLE [dbo].[TPRODUCTSIZE]  WITH CHECK ADD  CONSTRAINT [FK_TPRODUCTSIZE_TSIZES] FOREIGN KEY([size_no])
+REFERENCES [dbo].[TSIZES] ([no])
+GO
+
+ALTER TABLE [dbo].[TPRODUCTSIZE] CHECK CONSTRAINT [FK_TPRODUCTSIZE_TSIZES]
+GO
+
+USE [Intuition]
+GO
+
+/****** Object:  Table [dbo].[TSIZES]    Script Date: 6/19/2022 10:11:45 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[TSIZES](
+	[no] [int] NOT NULL,
+	[value] [nvarchar](50) NULL,
+ CONSTRAINT [PK_TSIZES] PRIMARY KEY CLUSTERED 
+(
+	[no] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+
