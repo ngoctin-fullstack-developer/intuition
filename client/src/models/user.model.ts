@@ -4,8 +4,8 @@ export interface IUser {
     username: string,
     password: string,
     email: string,
-    phoneNumber: string,
-    birthday: string,
+    phoneNumber: string | undefined,
+    birthday: string | undefined,
     address: string,
     role: string
 }

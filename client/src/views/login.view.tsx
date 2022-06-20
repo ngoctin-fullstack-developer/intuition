@@ -1,12 +1,16 @@
 import React, { useState } from 'react'
 import { Form, Button, Tooltip, OverlayTrigger } from 'react-bootstrap'
-import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
+import { AppDispatch } from '../app/store';
 import { ISignin } from '../models/signin.model';
 import AuthService from '../services/auth.service';
 import '../styles/register.style.scss'
+import { setCurrentUser } from '../app/slices/user.slice';
 
 const LoginView = () => {
-
+    const navigate = useNavigate();
+    const dispatch : AppDispatch = useDispatch();
     const [singin, setSignin] = useState<ISignin>({
         username: '',
         password: ''
@@ -18,13 +22,18 @@ const LoginView = () => {
         <Tooltip id="button-tooltip">{msg}</Tooltip>
     );
 
-    async function onClick(event: React.MouseEvent) {
+    async function onClickHandler(event: React.MouseEvent) {
         event.preventDefault();
-        const response = await AuthService.login(singin);
-        if(response === true){
-            console.log("Successfully !")
+        const user = await AuthService.login(singin);
+        
+        if(user){
+            // save token here
+            // console.log("login : " + user.fullname)
+            // dispatch(setCurrentUser(user));
+            localStorage.setItem('user',JSON.stringify(user));
+            navigate('/');
         }else{
-            console.log("Failed !")
+            // show modal login failed
         }
     }
 
@@ -59,7 +68,7 @@ const LoginView = () => {
                     <Form.Label>Password</Form.Label>
                     <Form.Control type="password" placeholder="Password" onChange={onInputChange} required />
                 </Form.Group>
-                <Button id='loginBtn' variant="primary" type="submit" onClick={onClick}>Sign In</Button>
+                <Button id='loginBtn' variant="primary" type="submit" onClick={onClickHandler}>Sign In</Button>
             </Form>
         </div >
     )

@@ -11,7 +11,7 @@ export default class OrderDatabaseOperation {
             var sql = 'INSERT INTO TORDERS '
                 + `VALUES('${order.no}',N'${order.address}',`
                 + `${order.quantity},NULL,${order.paymentMethod},`
-                + `'${order.subTotal}','${order.userID}',`
+                + `'${order.subTotal}','${order.userID}','${order.phoneNumber}',`
                 + `N'${order.fullname}',${order.status},'${order.insertDate}',NULL)`;
             var result = await connection.request().query(sql);
             if (Number(result.rowsAffected) > 0) {
@@ -29,7 +29,7 @@ export default class OrderDatabaseOperation {
             var connection = await DBConnect.connect(DBConfig);
             var sql = 'INSERT INTO TPRODUCTORDER '
                 + `VALUES('${orderDetail.orderNo}','${orderDetail.productNo}',` 
-                + `${orderDetail.quantity},${orderDetail.total})`;
+                + `${orderDetail.quantity},'${orderDetail.color}',${orderDetail.total})`;
             var result = await connection.request().query(sql);
             if (Number(result.rowsAffected) > 0) {
                 return true;

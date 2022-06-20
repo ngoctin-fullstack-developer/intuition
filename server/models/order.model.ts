@@ -7,6 +7,7 @@ export default class Order{
     public subTotal : string;
     public userID : string;
     public fullname : string;
+    public phoneNumber : string;
     public status : number;
     public insertDate : string;
     public modifiedDate : string
@@ -20,7 +21,8 @@ export default class Order{
     paymentMethod: number, 
     subTotal: string, 
     userID: string, 
-    fullname: string, 
+    fullname: string,
+    phoneNumber : string,
     status: number,
     insertDate : string,
     modifiedDate : string
@@ -33,6 +35,7 @@ export default class Order{
     this.subTotal = subTotal
     this.userID = userID
     this.fullname = fullname
+    this.phoneNumber = phoneNumber
     this.status = status,
     this.insertDate = insertDate,
     this.modifiedDate = modifiedDate

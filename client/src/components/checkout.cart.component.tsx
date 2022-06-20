@@ -5,6 +5,7 @@ import '../styles/checkoutCart.style.scss'
 import { cartSelector } from '../app/store'
 import CartItem from './cart.item.component'
 import { Link } from 'react-router-dom'
+import CurrencyUtil from '../utils/currency.util'
 const CheckoutCart = () => {
   const cart = useSelector(cartSelector);
   return (
@@ -37,16 +38,16 @@ const CheckoutCart = () => {
           <p>{`: 10%`}</p>
         </div>
         <div className='__singleText'>
-          <p>Delivery Charge  </p>
-          <p>{`: 25.000 VND`}</p>
+          <p>Delivery Charge </p>
+          <p>{`: ${CurrencyUtil.toVND(25000)}`}</p>
         </div>
         <div className='__singleText'>
           <p>Discount  </p>
-          <p>{`: 25.000 VND`}</p>
+          <p>{`: ${CurrencyUtil.toVND(0)}`}</p>
         </div>
         <div className='__singleText'>
           <p>Subtotal  </p>
-          <p>{`: ${cart.total} VND`}</p>
+          <p>{`: ${CurrencyUtil.toVND(Number(cart.total) + (Number(cart.total)* 0.1) + 25000)}`}</p>
         </div>
       </div>
       </div>

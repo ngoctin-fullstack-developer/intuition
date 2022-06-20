@@ -11,7 +11,7 @@ export default class AuthMiddleware {
         console.log('Token : ' + token);
         if (!token) {
             response.sendStatus(401)
-        }else {
+        } else {
             const secretKey = process.env.ACCESS_TOKEN_SECRET;
             if (secretKey) {
                 JWT.verify(token, secretKey, (err, data) => {
@@ -38,6 +38,8 @@ export default class AuthMiddleware {
         return refreshToken;
     }
     static getUserByToken(token: string): User | null {
+        if (token.includes('"'))
+            token = token.substring(1, token.length - 1);
         var decodedToken = JWT.decode(token);
         if (decodedToken && typeof (decodedToken) === 'object') {
             var user: User = {

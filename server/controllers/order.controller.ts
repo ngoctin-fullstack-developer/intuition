@@ -10,6 +10,7 @@ export default class OrderController {
             no : request.body.no,
             address : request.body.address,
             fullname : request.body.fullname,
+            phoneNumber : request.body.phoneNumber,
             promotionID : request.body.promotionID,
             userID : request.body.userID,
             paymentMethod : Number(request.body.paymentMethod),
@@ -28,6 +29,7 @@ export default class OrderController {
             orderNo : request.body.orderNo,
             productNo : request.body.productNo,
             quantity : request.body.quantity,
+            color : request.body.color,
             total : request.body.total
         }
         var result = await OrderDatabaseOperation.createOrderDetail(orderDetail);

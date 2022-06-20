@@ -3,10 +3,12 @@
     width: 100%;
     padding-right: 7.75%;
     height: 150px;
+
     .__left {
         display: flex;
         width: 25%;
-        > h2 {
+
+        >h2 {
             color: #393d46;
             padding-top: 60px;
             font-size: 24px;
@@ -15,18 +17,22 @@
             padding-left: 10%;
         }
     }
+
     .__right {
         display: flex;
-        margin-left: 61.25%;
-        width: 16%;
+        margin-left: 56.25%;
+        width: fit-content;
+        min-width: 21%;
         align-items: center;
         justify-content: space-between;
+
         button {
             border: none;
             background-color: transparent;
             width: fit-content;
             height: fit-content;
-            > svg {
+
+            >svg {
                 color: #393d46;
                 height: 100%;
                 width: 32px;
@@ -34,8 +40,27 @@
                 font-weight: 900;
             }
         }
+
+        .__profile {
+            height: 50px;
+            display: flex;
+            flex-direction: column;
+
+            >small {
+                font-size: 12px;
+                letter-spacing: 0.05rem;
+            }
+
+            >p {
+                letter-spacing: 0.05rem;
+                font-size: 16px;
+                font-weight: 500;
+            }
+        }
+
         a{
-            width: 100px;
+            width: fit-content;
+            min-width: 100px;
             height: 50px;
             border: 1px solid;
             text-align: center;

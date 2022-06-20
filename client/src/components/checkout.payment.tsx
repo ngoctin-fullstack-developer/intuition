@@ -1,10 +1,19 @@
 import '../styles/checkoutPayment.style.scss'
 import { useState } from 'react'
+import { AppDispatch } from '../app/store';
+import { useDispatch } from 'react-redux';
+import { setPaymentMethod } from '../app/slices/order.slice';
 const CheckoutPayment = () => {
     const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<number>(0);
+    const dispatch: AppDispatch = useDispatch();
     function onChangeHandler(event: React.ChangeEvent<HTMLInputElement>) {
         console.log(event.currentTarget.value)
         setSelectedPaymentMethod(Number(event.currentTarget.value))
+        if (selectedPaymentMethod === 0 ||
+            selectedPaymentMethod === 1 ||
+            selectedPaymentMethod === 2 ||
+            selectedPaymentMethod === 3)
+            dispatch(setPaymentMethod(selectedPaymentMethod))
     }
     return (
         <div className='checkoutPayment'>

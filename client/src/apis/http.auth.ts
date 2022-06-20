@@ -27,14 +27,15 @@ export default class AuthAPI {
         }
     }
 
-    static async getUserByToken(tokens : ITokens){
+    static async getUserByToken(tokens : ITokens){ 
         try{
-            var response = await HTTP.get('http://localhost:8080/api/auth/authorization',{
-                data : {
-                    tokens
-                }
+            var response = await HTTP.post('http://localhost:8080/api/auth/authorization',{
+                accessToken : tokens.accessToken,
+                // accessToken : tokens.accessToken,
+                refreshToken : tokens.refreshToken
             });
-            return response.data.data;
+            console.log("api : " + tokens.accessToken)
+            return response.data.user;
         }catch(error){
             if(request.isAxiosError(error) && error.response){
                 return error.response;
