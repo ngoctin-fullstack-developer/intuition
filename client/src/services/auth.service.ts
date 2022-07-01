@@ -18,16 +18,24 @@ export default class AuthService {
         var response = await AuthAPI.authenticate(signInInformation);
         console.log("username : " + signInInformation.username)
         console.log("password : " + signInInformation.password)
-        if (response) {
-            // console.log(response.accessToken)
-            localStorage.setItem('accessToken', JSON.stringify(response.accessToken));
+        var accessToken = response.accessToken;
+        var refreshToken = response.refreshToken;
+        var tokens: ITokens = {
+            accessToken,
+            refreshToken
         }
+        console.log("tokens : " + Object.values(tokens))
+        if (tokens) return tokens;
+        return null;
     }
 
-    static async logout() {
-        localStorage.removeItem('user');
-        localStorage.removeItem('accessToken');
+    static async authorize(tokens: ITokens) {
+        var user: IUser = await AuthAPI.getUserByToken(tokens);
+        if(user) return user;
+        return null;
     }
+
+    
 
     // static getAccessToken(): string {
     //     var user = localStorage.getItem('user');
@@ -38,19 +46,13 @@ export default class AuthService {
     //     return accessToken;
     // }
 
-    static async authorize(tokens: ITokens) {
-        var user: IUser = await AuthAPI.getUserByToken(tokens);
-        if (user) {
-            return user;
-        }
-        return null;
-    }
 
-    static getCurrentUser() : IUser | null {
+
+    static getCurrentUser(): IUser | null {
         var response = localStorage.getItem('user');
         var user = null;
         try {
-            if (response){
+            if (response) {
                 user = JSON.parse(response);
             }
         } catch (error) {
@@ -87,16 +89,16 @@ export default class AuthService {
             return true;
         return false;
     }
-    static getFullname() : string {
+    static getFullname(): string {
         var response = localStorage.getItem('user');
-        var user : IUser | null = null;
-        if(response){
-            try{
+        var user: IUser | null = null;
+        if (response) {
+            try {
                 user = JSON.parse(response);
-                if(user)
-                return user.fullname;
+                if (user)
+                    return user.fullname;
                 return 'error';
-            }catch(error){
+            } catch (error) {
                 console.log(error)
                 return 'error';
             }
