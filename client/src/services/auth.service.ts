@@ -20,13 +20,16 @@ export default class AuthService {
         console.log("password : " + signInInformation.password)
         var accessToken = response.accessToken;
         var refreshToken = response.refreshToken;
-        var tokens: ITokens = {
-            accessToken,
-            refreshToken
+
+        var tokens : ITokens | null = null;
+        if(accessToken && refreshToken){
+            tokens = {
+                accessToken,
+                refreshToken
+            }
+            console.log("tokens : " + Object.values(tokens))
         }
-        console.log("tokens : " + Object.values(tokens))
-        if (tokens) return tokens;
-        return null;
+        return tokens;
     }
 
     static async authorize(tokens: ITokens) {

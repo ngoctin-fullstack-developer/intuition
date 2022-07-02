@@ -3,6 +3,7 @@ import CheckoutView from './views/checkout.view'
 import HomeView from './views/home.view'
 import LoginView from './views/login.view'
 import ProductDetailView from './views/product.detail.view'
+import ProductsView from './views/products.view'
 import RegisterView from './views/register.view'
 
 const App = () => {
@@ -22,6 +23,7 @@ const App = () => {
             <Route path='/' element={<HomeView/>} />
             <Route path='/ProductDetail/:productID' element={<ProductDetailView/>}/>
             <Route path='/checkout' element={<CheckoutView/>} ></Route>
+            <Route path='/productview' element={<ProductsView/>} ></Route>
         </Routes>
     </div>
   )

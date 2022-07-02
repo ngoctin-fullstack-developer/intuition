@@ -9,15 +9,22 @@ import '../styles/register.style.scss'
 import { setCurrentUser } from '../app/slices/user.slice';
 import { useSelector } from 'react-redux';
 import { saveInfor } from '../app/slices/auth.slice';
+import { Modal } from 'react-bootstrap';
 
 const LoginView = () => {
     const navigate = useNavigate();
-    const dispatch : AppDispatch = useDispatch();
-    const {user,tokens,isLoggedIn} = useSelector(authSelector);
+    const dispatch: AppDispatch = useDispatch();
+    const { user, tokens, isLoggedIn } = useSelector(authSelector);
     const [singin, setSignin] = useState<ISignin>({
         username: '',
         password: ''
     })
+
+    const [show, setShow] = useState(false);
+    const handleModalClose = () => {
+        setShow(false);
+    };
+    const handleModalShow = () => setShow(true);
 
     const renderTooltip = (msg: string) => (
         <Tooltip id="button-tooltip">{msg}</Tooltip>
@@ -27,16 +34,18 @@ const LoginView = () => {
         event.preventDefault();
         var tokens = await AuthService.authenticate(singin);
         var user = null;
-        if(tokens){
+        if (tokens) {
             user = await AuthService.authorize(tokens);
-            if(user){
-                dispatch(saveInfor({tokens,user,isLoggedIn : true}))
+            if (user) {
+                dispatch(saveInfor({ tokens, user, isLoggedIn: true }))
                 navigate('/');
-            }else{
+            } else {
                 // display login failed
+                handleModalShow();
             }
-        }else{
+        } else {
             // display login failed
+            handleModalShow();
         }
     }
 
@@ -51,7 +60,6 @@ const LoginView = () => {
 
     async function onInputFocusOut(event: React.FocusEvent<HTMLInputElement>) {
         var inputID = event.currentTarget.getAttribute('id');
-
     }
 
     return (
@@ -73,6 +81,17 @@ const LoginView = () => {
                 </Form.Group>
                 <Button id='loginBtn' variant="primary" type="submit" onClick={onClickHandler}>Sign In</Button>
             </Form>
+            <Modal show={show} onHide={handleModalClose}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Inform</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>Login Failed !</Modal.Body>
+                <Modal.Footer>
+                    <Button variant="danger" onClick={handleModalClose}>
+                        OK
+                    </Button>
+                </Modal.Footer>
+            </Modal>
         </div >
     )
 }

@@ -24,8 +24,6 @@ const MyCart = () => {
         var btnId = event.currentTarget.getAttribute('id');
         if(btnId === 'btnProceed'){
             if(cart.items.length !== 0){
-                // navigate to checkout pay
-                // navigate('/checkout',{replace : true});
                 navigate('/checkout',{
                     replace : false,
                 })

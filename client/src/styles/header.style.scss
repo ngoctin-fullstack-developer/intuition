@@ -18,11 +18,31 @@
         }
     }
 
+    .__middle {
+        width: 60%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        .__content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            >small {
+                font-size: 16px;
+                letter-spacing: 0.08rem;
+            }
+            >small:nth-child(2){
+                font-weight: 600;
+                margin-left: 5px;
+            }
+        }
+    }
+
     .__right {
         display: flex;
-        margin-left: 56.25%;
+        // margin-left: 51.25%;
         width: fit-content;
-        min-width: 21%;
+        width: 15%;
         align-items: center;
         justify-content: space-between;
 
@@ -42,23 +62,11 @@
         }
 
         .__profile {
-            height: 50px;
             display: flex;
-            flex-direction: column;
-
-            >small {
-                font-size: 12px;
-                letter-spacing: 0.05rem;
-            }
-
-            >p {
-                letter-spacing: 0.05rem;
-                font-size: 16px;
-                font-weight: 500;
-            }
+            width: 30%;
         }
 
-        a{
+        a {
             width: fit-content;
             min-width: 100px;
             height: 50px;
