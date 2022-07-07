@@ -1,16 +1,19 @@
 export interface IFilter {
-    cate : string|null,
-    color : string|null,
-    size : string|null,
+    cates : Array<string>,
+    colors : Array<string>,
+    sizes : Array<string>,
     price : {
-        min : string,
-        max : string,
-    } | null
+        min : number,
+        max : number,
+    }
 }
 
 export const initialFilter : IFilter = {
-    cate : null,
-    color : null,
-    size : null,
-    price : null
+    cates : [],
+    colors : [],
+    sizes : [],
+    price : {
+        min : 0,
+        max : 10000000 
+    }
 }

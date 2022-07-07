@@ -52,17 +52,17 @@ const Footer = () => {
         <div className='footer'>
             <div className='footer__container'>
                 <div className='footer__container__sectionOne'>
-                    <p>Là thương hiệu thời trang được thành lập năm 2021 <br />
-                        Địa chỉ: Chung cư Jamila Khang Điền <br />
-                        Sđt: 0327244190</p>
+                    <p>Fashion brand founded in 2021 <br />
+                        Address : 6119 S Overlook TRL, Springfield, Missouri 65810 <br />
+                        Phone Number : (+1) 417-379-6168</p>
                 </div>
                 <div className='footer__container__sectionTwo'>
                     <p>Công ty</p>
-                    <Link to="/">Trang chủ</Link>
-                    <Link to="/about-us">Giới thiệu</Link>
-                    <Link to="/service">Sản phẩm <br />& Dịch vụ</Link>
-                    <Link to="/team">Đội ngũ</Link>
-                    <Link to="#">Cơ hội <br />& nghề nghiệp</Link>
+                    <Link to="/">Home</Link>
+                    <Link to="/about-us">About Us</Link>
+                    <Link to="/service">Products<br />& Services</Link>
+                    <Link to="/team">Teams</Link>
+                    <Link to="#">Opportunities<br />& Career</Link>
                 </div>
                 <div className='footer__container__sectionThree'>
                     <p>Khác</p>
@@ -81,10 +81,10 @@ const Footer = () => {
                 &#8595;
             </button>
             <div className='footer__copyright' >
-                <p>© Bản quyền 2021 bởi : ngoctin.fullstack.developer@gmail.com</p>
-                <Link to="#">Điều khoản sử dụng</Link>
+                <p>© Developed by : tinnn1908.se@gmail.com</p>
+                <Link to="#">Terms of use</Link>
                 <p>|</p>
-                <Link to="#">Chính sách bảo mật</Link>
+                <Link to="#">Privacy Policy</Link>
             </div>
         </div>
     )
