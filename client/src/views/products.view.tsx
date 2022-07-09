@@ -12,6 +12,7 @@ import { useSelector } from 'react-redux';
 import Products from '../components/products.component';
 import { Col, Row } from 'react-bootstrap';
 import ProductCard from '../components/productCard.component';
+import { APPLICATION } from '../Constants/application.constant';
 const ProductsView = () => {
 
     const { products } = useSelector(productsSelector);
@@ -26,9 +27,9 @@ const ProductsView = () => {
             <div className='__title'>
                 <h1>Products</h1>
                 <button onClick={onClickHandler}><FilterAltOutlinedIcon /></button>
-
             </div>
-            <div className='__content'>
+            <Products title={APPLICATION.PRODUCT_TITLE_PRODUCTS_FILTER} products={products}/>
+            {/* <div className='__content'>
                 <Row xs={1} md={3} className="g-4">
                     {
                         products.map(product => (
@@ -36,7 +37,7 @@ const ProductsView = () => {
                         ))
                     }
                 </Row>
-            </div>
+            </div> */}
             <Footer />
             <Filter />
         </div>

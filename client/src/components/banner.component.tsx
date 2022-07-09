@@ -13,7 +13,7 @@ const Banner = () => {
           <p>Price</p>
           <h3>$117.99</h3>
         </div>
-        <Link to="/login">Shop Now</Link>
+        <Link to="/productview">Shop Now</Link>
       </div>
       <div className='__right'>
         <MyCarousel />

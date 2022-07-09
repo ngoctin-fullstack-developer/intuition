@@ -214,8 +214,6 @@ const ProductDetailView = () => {
                 </div>
             </div>
             <Footer />
-
-            // modal go here
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
                     <Modal.Title>Inform</Modal.Title>

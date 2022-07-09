@@ -13,27 +13,20 @@ interface Props {
 const Products = (params: Props) => {
 
     const navigate = useNavigate();
-    useEffect(() => {
-        async function fetchData() {
-            var products: Array<IProduct> = await ProductService.getNewestProducts();
-            setProducts(products);
-        }
-        fetchData();
-    }, [])
 
     function onClickHandler(event: React.MouseEvent) {
         navigate('/productview');
     }
 
-
-    const [products, setProducts] = useState<Array<IProduct>>([]);
+    
+    
 
     return (
         <div className='products'>
-            <h1>{params.title}</h1>
+            {(params.title !== APPLICATION.PRODUCT_TITLE_PRODUCTS_FILTER) && <h1>{params.title}</h1>}
             <Row xs={1} md={3} className="g-4">
                 {
-                    products.map(product => (
+                    params.products.map(product => (
                         <Col><ProductCard key={product.no} {...product} /></Col>
                     ))
                 }
