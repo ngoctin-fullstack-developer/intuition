@@ -32,7 +32,6 @@ const SingleFilter = ({ title, type }: Props) => {
                 }));
                 break;
             case "price":
-                
                 dispatch(removeFilter({
                     type : "price",
                     title

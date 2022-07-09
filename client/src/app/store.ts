@@ -10,6 +10,7 @@ import storage from 'redux-persist/lib/storage'
 import { persistReducer } from 'redux-persist'
 import { combineReducers } from 'redux'
 import { filterSlice } from './slices/filter.slice';
+import { productSlice } from './slices/products.slice';
 
 const persistConfig = {
     key: "root",
@@ -25,7 +26,8 @@ const reducer = combineReducers({
     order: orderSlice.reducer,
     auth: authSlice.reducer,
     user: userSlice.reducer,
-    filter : filterSlice.reducer
+    filter : filterSlice.reducer,
+    products : productSlice.reducer
 })
 
 const persistedReducer = persistReducer(persistConfig,reducer);
@@ -63,3 +65,4 @@ export const orderSelector = (state: RootState) => state.order
 export const authSelector = (state: RootState) => state.auth
 export const userSelector = (state: RootState) => state.user
 export const filterSelector = (state : RootState) => state.filter
+export const productsSelector = (state : RootState) => state.products

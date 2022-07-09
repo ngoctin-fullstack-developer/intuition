@@ -34,3 +34,11 @@ export const initialProduct : IProduct = {
     colors : []
 }
 
+export interface IProducts {
+    products : Array<IProduct>
+}
+
+export const initialProducts : IProducts = {
+    products : []
+}
+

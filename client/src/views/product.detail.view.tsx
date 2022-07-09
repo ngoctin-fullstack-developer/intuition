@@ -19,6 +19,7 @@ import { ICartItem } from '../models/cart.model';
 import { Modal, Button } from 'react-bootstrap'
 import { IColor } from '../models/color.model';
 import CurrencyUtil from '../utils/currency.util';
+import { APPLICATION } from '../Constants/application.constant';
 const ProductDetailView = () => {
 
 
@@ -34,6 +35,7 @@ const ProductDetailView = () => {
     const [product, setProduct] = useState<IProduct>(initialProduct);
     const [modalMessage, setModalMessage] = useState<string>('');
     const [show, setShow] = useState(false);
+    const [relatedProducts, setRelatedProducts] = useState<Array<IProduct>>([]);
     
     const handleClose = () => {
         setShow(false);
@@ -49,6 +51,11 @@ const ProductDetailView = () => {
                 url: `https://picsum.photos/1000?random=${id}`
             }))
         );
+        async function fetchRelatedProducts() {
+            var resp = await ProductService.getNewestProducts();
+            if(resp) setRelatedProducts(resp);
+        }
+        fetchRelatedProducts();
     }, []);
 
     useEffect(() => {
@@ -203,7 +210,7 @@ const ProductDetailView = () => {
                     </div>
                 </div>
                 <div className='__related-products' >
-                    <Products title='Related Products' />
+                    <Products title={APPLICATION.PRODUCT_TITLE_RELATED_PRODUCTS} products={relatedProducts}/>
                 </div>
             </div>
             <Footer />

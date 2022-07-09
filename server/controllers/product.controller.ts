@@ -1,5 +1,7 @@
 import { Request, Response } from "express";
 import ProductDatabseOperation from "../database/product.operation";
+import { IFilter } from "../models/filter.model";
+import Product from "../models/product.model";
 
 export default class ProductController {
     static async getNewestProducts(request: Request, response: Response) {
@@ -37,4 +39,27 @@ export default class ProductController {
             product
         })
     }
+
+    static async getProductsByFilter(request: Request, response: Response) {
+        var cates: Array<string> = request.body.cates;
+        var sizes: Array<string> = request.body.sizes;
+        var colors: Array<string> = request.body.colors;
+        var price: {
+            min: number,
+            max: number
+        } = request.body.price;
+        var filter: IFilter = { cates, sizes, colors, price };
+        console.log(filter)
+        var products = await ProductDatabseOperation.getProductsByFilter(filter);
+        for (let i = 0; i < products.length; i++) {
+            var product = products[i];
+            var tmpSizes = await ProductDatabseOperation.getSizeByProductNo(product.no);
+            var tmpColors = await ProductDatabseOperation.getColorsByProductNo(product.no);
+            products[i].sizes = tmpSizes;
+            products[i].colors = tmpColors;
+        }
+        console.log(products)
+        return response.status(200).json({products});
+    }
+
 }

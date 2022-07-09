@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux'
-import { AppDispatch, canvasSelector, filterSelector } from '../app/store'
+import { AppDispatch, canvasSelector, filterSelector, productsSelector } from '../app/store'
 import { Offcanvas } from 'react-bootstrap'
 import { setMyFilterHidden } from '../app/slices/canvas.slice';
 import { Accordion, Form } from 'react-bootstrap';
@@ -10,23 +10,43 @@ import { addFilter, removeFilter } from '../app/slices/filter.slice';
 import '../styles/filter.style.scss'
 import SingleFilter from './singleFilter.component';
 import FilterService from '../services/filter.service';
+import { IProduct } from '../models/product.model';
+import ProductService from '../services/product.service';
+import { loadProducts } from '../app/slices/products.slice';
 const Filter = () => {
 
-    const categories = ["Jacket", "Shirt", "Pant"];
-    const colors = ["Red", "Yellow", "Pink", "Green", "Blue", "Black"]
+    const categories = ["Jacket", "T-Shirt", "Pant"];
+    const colors = ["Đỏ tươi","Xanh da trời nhạt","Xanh dạ quang","Tím nhạt","Hống Phấn"]
+    //
     const sizes = ["S", "XS", "M", "L", "XL", "XXL"]
     const filter = useSelector(filterSelector);
     const { isFilterShown, isEnableScroll, placement } = useSelector(canvasSelector);
+    const {products} = useSelector(productsSelector);
 
     const dispatch: AppDispatch = useDispatch();
-    function handleSearchClose() {
+    async function handleFilterClose() {
+        // load data here
         dispatch(setMyFilterHidden())
+        var response: Array<IProduct> = await ProductService.getProductsByFilterReq(filter);
+        if (response.length !== 0) {
+            dispatch(loadProducts(response));
+        }
     }
     const [slideBarValue, setSlideBarValue] = useState<number[]>([0, 10000000]);
     const minDistance = 1000000;
     // function valuetext(value: number) {
     //     return `${value}VND`;
     // }
+
+    useEffect(() => {
+        console.log("uf : " + slideBarValue[0] + " - " + slideBarValue[1])
+        if (slideBarValue[0] === 0) {
+            dispatch(addFilter({
+                type: "price",
+                title: `0-${slideBarValue[1]}`
+            }))
+        }
+    }, [slideBarValue])
 
     const handleChange2 = (
         event: Event,
@@ -58,33 +78,12 @@ const Filter = () => {
             }
         } else {
             console.log("else")
+            dispatch(addFilter({
+                type: "price",
+                title: `${newValue[0]}-${newValue[1]}`
+            }))
             setSlideBarValue(newValue as number[]);
         }
-        dispatch(addFilter({
-            type: "price",
-            title: `${newValue[0]}-${newValue[1]}`
-        }))
-        // if (newValue[0] === 0 && newValue[1] === 10000000) {
-        //     console.log("min-max")
-        //     dispatch(removeFilter({
-        //         type: "price",
-        //         title: ''
-        //     }))
-        // } else {
-        //     console.log("customize")
-        //     if (newValue[0] === 0) {
-        //         dispatch(addFilter({
-        //             type: "price",
-        //             title: `0-${newValue[1]}`
-        //         }))
-        //     }
-        //     if (newValue[1] === 10000000) {
-        //         dispatch(addFilter({
-        //             type: "price",
-        //             title: `${newValue[0]}-10000000`
-        //         }))
-        //     }
-        // }
     };
 
     function onPriceChangeHandler(event: React.ChangeEvent<HTMLInputElement>) {
@@ -177,7 +176,7 @@ const Filter = () => {
     }
 
     return (
-        <Offcanvas show={isFilterShown} onHide={handleSearchClose} placement='start' scroll={isEnableScroll}>
+        <Offcanvas show={isFilterShown} onHide={handleFilterClose} placement='start' backdrop='false' scroll={isEnableScroll}>
             <Offcanvas.Header closeButton>
                 <Offcanvas.Title>Filter</Offcanvas.Title>
             </Offcanvas.Header>
